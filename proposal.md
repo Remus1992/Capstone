@@ -47,11 +47,25 @@ Technical Components:
 Schedule
   From easiest to hardest (also by need of order)
     -	Creating “about page” and “basic layout for comprehension”
+        This part strikes me as needing little more than writing the HTML code and then
+        manipulating it to something aesthetic. Javascript will be needed eventually but
+        probably not until the other portions are completed (or at least near the end).
+        Could probably be feasibly done within a day or two.
     -	Creating database of “users”
     -	Creating database of “projects”
+        I could be wrong here for sure but my impression is that the above elements will be very similar
+        in code. My hypothesis is that the first part will take me a week and then the second part will
+        take just a day or two after that where I reorganize the code to work elsewise.
     -	Search engine of both (starting with projects)
+        Although I've never made a search engine before, I don't think the initial engine will be too difficult.
+        I do think that making it functional for other taglines might be a bit more difficult.
+        Overall, I say maybe 3-4 days.
     -	Communicating between “users” (will this be on the website or require external com?)
-  -	Request/Accept/ Decline project
+        If all else fails, I can account for users to communicate externally through either text or email.
+        For an in-app chat system though, I'd say maybe 2-3 days.
+    -	Request/Accept/ Decline project
+        Probably more than any of the previous points, I think this one will throw more curveballs than I'm expecting.
+        Could be anywhere from 1-4 days.
 
 Further Work:
   From Easiest To Hardest Tasks to Add:
