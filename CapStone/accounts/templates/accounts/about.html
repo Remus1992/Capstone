@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    : About
+{% endblock %}
+
+{% block content %}
+    <head>
+        <style>
+
+            body {
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/static/accounts/img/broadcast_camera.jpg");
+                background-size: cover;
+                color: white;
+                text-align: center;
+                font-size: large;
+
+            }
+
+        </style>
+    </head>
+
+    <body>
+    <br>
+    <h1>About</h1>
+    <br>
+    <p>The initial focus group for this product is aspiring filmmakers</p>
+    <p>although it could be applied to just about anything collaborative</p>
+    <p>in nature. I envision it as a more professional, more streamlined,</p>
+    <p>more aesthetic form of Craigslist.</p>
+
+    </body>
+
+
+
+{% endblock %}
+

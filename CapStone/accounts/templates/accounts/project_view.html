@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load accounts_tags %}
+
+{% block title %}
+    : Project
+{% endblock %}
+
+{% block content %}
+    <head>
+        <style>
+            body {
+                background-color: darkslategray;
+                color: white;
+            {#background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), '<img src="{}" alt="background">' . format(project . project_images . url));#}{#background-size: cover;#}
+
+            }
+
+
+        </style>
+    </head>
+    <body>
+    <div class="container" style="padding-top: 60px;">
+        <h1 class="page-header">{{ project.title }}</h1>
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="text-center">
+                    {% project_poster_or_default_image project %}
+                </div>
+                <br>
+                <div class="text-left">
+                    {{ project.description }}
+                </div>
+            </div>
+            <!-- edit form column -->
+            <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+                <h3>Project Details</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Budget:</b> {{ project.budget }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>Budget Details:</b> {{ project.budget_details }}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>City:</b> {{ project.city }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>State:</b> {{ project.state }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>Zip Code:</b> {{ project.zip }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>Projected Start Date:</b> {{ project.start_date }}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>Projected End Date:</b> {{ project.end_date }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>Needed Cast/ Roles:</b>
+                            {% for cast in project.cast_members.all %}
+                                <div>
+                                    {{ cast }}
+                                    {{ cast.character }} : {{ cast.classification }}
+                                </div>
+                            {% endfor %}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-8 control-label"><b>Needed Crew:</b>
+                            {% for crew in project.crew_members.all %}
+                                <div>
+                                    {{ crew.classification }}
+                                </div>
+                            {% endfor %}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <a href="{% url 'project_edit' project.slug %}" class="btn btn-primary">Edit</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+{% endblock %}

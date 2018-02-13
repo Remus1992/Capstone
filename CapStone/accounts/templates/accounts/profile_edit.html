@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load accounts_tags %}
+{% block title %}
+    : Edit Profile
+{% endblock %}
+
+{% block content %}
+    <head>
+        <style>
+            body {
+                background-color: darkslategray;
+                color: white;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container" style="padding-top: 60px;">
+        <h1 class="page-header">Edit Profile</h1>
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="text-center">
+                    {% profile_or_default_image user %}
+                    <h6>Upload a different photo...</h6>
+                    <input name="profile_image" type="file" class="text-center center-block well well-sm"
+                           form="edit_profile_form">
+                    <div class="text-left">
+                        <label class="text-left">Profile Bio:</label>
+                        <textarea name="profile_bio" id="profile_bio" cols="40" rows="15"
+                                  form="edit_profile_form">{{ user.profile_bio }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- edit form column -->
+            <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+                {#                <div class="alert alert-info alert-dismissable">#}
+                {#                    <a class="panel-close close" data-dismiss="alert">×</a>#}
+                {#                    <i class="fa fa-coffee"></i>#}
+                {#                    This is an <strong>.alert</strong>. Use this to show important messages to the user.#}
+                {#                </div>#}
+                <h3>Personal info</h3>
+                <form id="edit_profile_form" role="form" enctype="multipart/form-data"
+                      method="post">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label"><b>Username:</b></label>
+                        <div class="col-lg-8">
+                            <h3>{{ user }}</h3>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">First name:</label>
+                        <div class="col-lg-8">
+                            <input name="first_name" class="form-control" value="{{ user.first_name }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Last name:</label>
+                        <div class="col-lg-8">
+                            <input name="last_name" class="form-control" value="{{ user.last_name }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Email:</label>
+                        <div class="col-lg-8">
+                            <input name="email" class="form-control" value="{{ user.email }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Phone Number:</label>
+                        <div class="col-lg-8">
+                            <input name="phone_number" class="form-control" value="{{ user.phone_number }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Password:</label>
+                        <div class="col-md-8">
+                            <input name="password" class="form-control" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Confirm password:</label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Skills:</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" id="skill_0" name="skill_profile_0"
+                                   placeholder="Your skill..">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="skill-level_0">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="expert">Expert</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success my-2 my-sm-0" type="button" id="skill_button">Add Another
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="skills_box">
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Interests:</label>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" id="interest_profile_0" name="interest_profile_0"
+                                   placeholder="Your interest...">
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success my-2 my-sm-0" type="button" id="interest_button">Add
+                                Another
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="interest_box">
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Equipment:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="equipment_profile_0" name="equipment_profile_0"
+                                   placeholder="What kind of equipment have you got?">
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="equipment_condition_0" class="form-control">
+                                <option value="new">New</option>
+                                <option value="like_new">Like New</option>
+                                <option value="used">Used</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success my-2 my-sm-0" type="button" id="equipment_button">Add Another
+                            </button>
+                        </div>
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-3">
+                            <input type="file" id="equipment_image_0" class="form-control" name="equipment_image_0">
+                        </div>
+                    </div>
+
+                    <div id="equipment_box">
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-8">
+                            <input class="btn btn-primary" value="Save Changes" type="submit">
+                            <span></span>
+                            <input class="btn btn-default" value="Reset" type="reset">
+                            <span></span>
+                            <a href="{% url 'profile' %}" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+
+    <script>
+        document.querySelector('#skill_button').addEventListener("click", newSkill);
+        document.querySelector('#interest_button').addEventListener("click", newInterest);
+        document.querySelector('#equipment_button').addEventListener("click", newEquipment);
+
+        function newSkill() {
+            var num = document.getElementById("skills_box").children.length + 1;
+            {#console.log(num);#}
+
+            var new_row = '<div class="form-group row" id="row_' + num + '"><label class="col-md-2 control-label"></label><div class="col-sm-3"><input class="form-control" type="text" id="skill_' + num + '" name="skill_profile_' + num + '"placeholder="Your skill.."></div><div class="col-sm-3"><select class="form-control" name="skill-level_' + num + '"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option><option value="expert">Expert</option></select></div><div class="col-sm-3"><input type="button" button class="btn btn-danger" id="skill_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'skills_box\', \'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#skills_box").innerHTML += new_row;
+        }
+
+        function newInterest() {
+            var num = document.getElementById("interest_box").children.length + 1;
+            console.log(num);
+
+            var new_row = '<div class="form-group row" id="row_' + num + '"><label class="col-md-2 control-label"></label><div class="col-sm-3"></div><div class="col-sm-3"> <input class="form-control" type="text" id="interest_profile_' + num + '" name="interest_profile_' + num + '" placeholder="Your interest..."></div><div class="col-sm-3"><input type="button" button class="btn btn-danger" id="skill_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'interest_box\', \'row_' + num + '\');"></button></div> </div>';
+            document.querySelector("#interest_box").innerHTML += new_row;
+        }
+
+        function newEquipment() {
+            var num = document.getElementById("equipment_box").children.length + 1;
+            {#console.log(num);#}
+
+            var new_row = '<div class="form-group row"id="row_' + num + '"><label class="col-md-2 control-label"></label> <div class="col-sm-3"> <input type="text" class="form-control" id="equipment_profile_' + num + '" name="equipment_profile_' + num + '"></div><div class="col-sm-3"><select name="equipment_condition_' + num + '" class="form-control"><option value="new">New</option> <option value="like_new">Like New</option> <option value="used">Used</option> </select> </div> <div class="col-sm-3"> <input type="button" button class="btn btn-danger" id="equip_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'equipment_box\', \'row_' + num + '\');"></button> </div> <div class="col-sm-5"></div> <div class="col-sm-3"> <input type="file" id="equipment_image_'+ num + '" class="form-control" name="equipment_image_' + num + '"> </div> </div>';
+            document.querySelector("#equipment_box").innerHTML += new_row;
+        }
+
+        function removeElement(parentDiv, childDiv) {
+            if (childDiv == parentDiv) {
+                alert("The parent div cannot be removed.")
+            }
+            else if (document.getElementById(childDiv)) {
+                var child = document.getElementById(childDiv);
+                var parent = document.getElementById(parentDiv);
+                parent.removeChild(child);
+            }
+            else {
+                alert("Child div has already been removed or does not exist.");
+                return false;
+            }
+        }
+    </script>
+{% endblock %}

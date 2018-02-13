@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load accounts_tags %}
+
+{% block title %}
+    : Profile
+{% endblock %}
+
+{% block content %}
+    <head>
+        <style>
+
+            body {
+                background-color: darkslategray;
+                color: white;
+            }
+
+            #first_column, #second_column, #third_column {
+                border-radius: 5px;
+                background-color: rgba(255, 255, 255, 0.8);
+                /*font-size: medium;*/
+                /*font-weight: bold;*/
+                padding: 10px;
+                color: black;
+                margin-left: 10px;
+            }
+
+            /*#test1 {*/
+                /*padding: 10px;*/
+            /*}*/
+        </style>
+    </head>
+    <body>
+
+    <div class="container" style="padding-top: 30px;">
+        <h2 class="page-header">{{ user.first_name }} {{ user.last_name }}</h2>
+        <div class="row">
+            <!-- left column -->
+            <div id="first_column" class="col-md-4">
+                <div class="text-center">
+                    {% profile_or_default_image user %}
+                </div>
+                <br>
+                <div class="text-left">
+                    {{ user.profile_bio }}
+                </div>
+            </div>
+            <!--<div id="test1"></div>-->
+            <!-- edit form column -->
+            <div id="second_column" class="col-md-4 col-md-offset-1">
+                {#                <div class="alert alert-info alert-dismissable">#}
+                {#                    <a class="panel-close close" data-dismiss="alert">×</a>#}
+                {#                    <i class="fa fa-coffee"></i>#}
+                {#                    This is an <strong>.alert</strong>. Use this to show important messages to the user.#}
+                {#                </div>#}
+                <h3>Personal info</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Username:</b> {{ user }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>First name:</b> {{ user.first_name }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Last name:</b> {{ user.last_name }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Email:</b> {{ user.email }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Phone Number:</b> {{ user.phone_number }}</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Skills:</b>
+                            {% for skill in user.skills.all %}
+                                <div>
+                                    {{ skill.name }} : {{ skill.level }}
+                                </div>
+                            {% endfor %}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Interests:</b>
+                            {% for interest in user.interests.all %}
+                                <div>
+                                    {{ interest.name }}
+                                </div>
+                            {% endfor %}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Equipment:</b>
+                            {% for equipment in user.equipment.all %}
+                                <div>
+                                    {{ equipment.name }} : {{ equipment.condition }}
+                                </div>
+                            {% endfor %}
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--<div id="test1"></div>-->
+            <div id="third_column" class="col-md-3 personal-info">
+                <h3>Projects</h3>
+                <div class="form-group">
+                    {% for project in user.owned_projects.all %}
+                        {#                        <label class="col-md-8 control-label"> {{ project.title }}</label>#}
+                        <a href="{% url 'project_view' project.slug %}"
+                           class="col-md-8 control-label">{{ project.title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+{% endblock %}
+
+{#<div clas="container">#}
+{#    <h1>Profile</h1>#}
+{#    <p>#}
+{#        Username: {{ user }}#}
+{#        <br>#}
+{#        First Name: {{ user.first_name }}#}
+{#        <br>#}
+{#        Last Name: {{ user.last_name }}#}
+{#        <br>#}
+{#        Email: {{ user.email }}#}
+{#        <br>#}
+{#        Phone Number: {{ user.phone_number }}#}
+{##}
+{#    <h2>Skills</h2>#}
+{#    {% for skill in user.skills.all %}#}
+{#        <div>#}
+{#            {{ skill.name }} : {{ skill.level }}#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#    <br>#}
+{#    <h2>Interests</h2>#}
+{#    {% for interest in user.interests.all %}#}
+{#        <div>#}
+{#            {{ interest.name }}#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#    <br>#}
+{#    <h2>Equipment</h2>#}
+{#    {% for equipment in user.equipment.all %}#}
+{#        <div>#}
+{#            {{ equipment.name }} : {{ equipment.condition }}#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#    </p>#}
+{#</div>#}
+{#<a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit</a>#}

@@ -1,0 +1,348 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    : Register
+{% endblock %}
+
+{% block content %}
+
+
+    <style>
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("/static/accounts/img/camera_mirror_background.jpg");
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 60px;
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        .col-15 {
+            float: left;
+            width: 15%;
+            margin-top: 6px;
+        }
+
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+
+        .col-30 {
+            float: left;
+            width: 30%;
+            margin-top: 6px;
+        }
+
+        .col-45 {
+            float: left;
+            width: 45%;
+            margin-top: 6px;
+        }
+
+        .col-60 {
+            float: left;
+            width: 60%;
+            margin-top: 6px;
+        }
+
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+
+        #submit_button {
+            float: right;
+
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media (max-width: 500px) {
+            .col-25, .col-75, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+
+    </style>
+
+    <br>
+    <br>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Create A Profile</h1>
+            <div class="row">
+                <div class="col-25">
+                    <label for="profile_image">Profile Image</label>
+                </div>
+                <div class="col-25">
+                    <input type="file" id="profile_image" name="profile_image" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="username">Username</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="username" name="username" placeholder="Your username...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="fname">First Name</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname">Last Name</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="password">Password</label>
+                </div>
+                <div class="col-25">
+                    <input type="password" id="password" name="password" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="conf_password">Confirm Password</label>
+                </div>
+                <div class="col-25">
+                    <input type="password" id="conf_password" name="conf_password" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="email">Email</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="email" name="email_address" placeholder="Your email..">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="phone_number">Phone Number</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number...">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="skill">Skills</label>
+                </div>
+                <div class="col-45">
+                    <input type="text" id="skill_0" name="skill_profile_0" placeholder="Your skill..">
+                </div>
+                <div class="col-15">
+                    <select name="skill-level_0">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                <div class="col-15">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="skill_button">Add Another</button>
+                </div>
+            </div>
+            <div id="skills_box">
+            </div>
+
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="interest_profile_0">Interests</label>
+                </div>
+                <div class="col-60">
+                    <input type="text" id="interest_profile_0" name="interest_profile_0" placeholder="Your interest...">
+                </div>
+                <div class="col-15">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="interest_button">Add Another</button>
+                </div>
+            </div>
+
+            <div id="interest_box">
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="equipment_0">Equipment</label>
+                </div>
+                <div class="col-30">
+                    <input type="text" id="equipment_profile_0" name="equipment_profile_0"
+                           placeholder="What kind of equipment have you got?">
+                </div>
+                <div class="col-15">
+                    <input type="file" id="equipment_image_0" class="form-control" name="equipment_image_0">
+                </div>
+                <div class="col-15">
+                    <select name="equipment_condition_0">
+                        <option value="new">New</option>
+                        <option value="like_new">Like New</option>
+                        <option value="used">Used</option>
+                    </select>
+                </div>
+                <div class="col-15">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="equipment_button">Add Another
+                    </button>
+                </div>
+            </div>
+            <div id="equipment_box">
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="profile_bio">Bio</label>
+                </div>
+                <div class="col-75">
+                    <textarea id="profile_bio" name="profile_bio"
+                              placeholder="Tell us about yourself? What's your raison d'&#234;'tre?"></textarea>
+                </div>
+            </div>
+            <div id='submit_button' class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Create a new list item when clicking on the "Add" button
+
+        document.querySelector('#skill_button').addEventListener("click", newSkill);
+        document.querySelector('#interest_button').addEventListener("click", newInterest);
+        document.querySelector('#equipment_button').addEventListener("click", newEquipment);
+
+        function newSkill() {
+            {#var row_div = document.createElement("div");#}
+            {#row_div.className = "row";#}
+            {#var first_div = document.createElement("div");#}
+            {#first_div.className = "col-25";#}
+            {#var second_div = document.createElement("div");#}
+            {#second_div.className = "col-35";#}
+            {#var skill_input = document.createElement("input");#}
+            {#skill_input.setAttribute("name", "skill_profile");#}
+            {#skill_input.setAttribute("placeholder", "Your skill..");#}
+            {#var third_div = document.createElement("div");#}
+            {#third_div.className = "col-15";#}
+            {#var skill_level = document.createElement("select");#}
+            {#skill_level.setAttribute("name", "skill-level");#}
+            {#var option_1 = document.createElement("option");#}
+            {#option_1.setAttribute("value", "beginner");#}
+            {#var option_2 = document.createElement("option");#}
+            {#option_2.setAttribute("value", "beginner");#}
+            {#var option_3 = document.createElement("option");#}
+            {#option_3.setAttribute("value", "beginner");#}
+            {#var fourth_div = document.createElement("div");#}
+            {#fourth_div.className = "col-25";#}
+            {##}
+            {#row_div.appendChild(first_div);#}
+            {#row_div.appendChild(second_div);#}
+            {#row_div.appendChild(third_div);#}
+            {#row_div.appendChild(fourth_div);#}
+            {#second_div.appendChild(skill_input);#}
+            {#third_div.appendChild(skill_level);#}
+            {#skill_level.appendChild(option_1);#}
+            {#skill_level.appendChild(option_2);#}
+            {#skill_level.appendChild(option_3);#}
+
+            var num = document.getElementById("skills_box").children.length + 1;
+            {#console.log(num);#}
+
+            var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"> </div> <div class="col-45"><input type="text" id="skill_' + num + '" name="skill_profile_' + num + '" placeholder="Your skill.."> </div> <div class="col-15"> <select name="skill-level_' + num + '"> <option value="beginner">Beginner</option> <option value="intermediate">Intermediate</option> <option value="expert">Expert</option> </select> </div> <div class="col-15"> <input type="button" button class="btn btn-danger" id="skill_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'skills_box\',\'row_' + num + '\');"></button></div> </div>';
+            document.querySelector("#skills_box").innerHTML += new_row;
+        }
+
+        function newInterest() {
+            var num = document.getElementById("interest_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"> </div><div class="col-60"><input type="text" id="interest_profile_' + num + '" name="interest_profile_' + num + '" placeholder="Your interest.."> </div> <div class="col-15"> <input type="button" button class="btn btn-danger" id="interest_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'interest_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#interest_box").innerHTML += new_row;
+        }
+
+        function newEquipment() {
+            var num = document.getElementById("equipment_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"></div><div class="col-30"><input type="text" id="equipment_profile_' + num + '" name="equipment_profile_' + num + '" placeholder="What kind of equipment have you got?"></div>  <div class="col-15"><input type="file" id="equipment_image_' + num + '" name="equipment_image_' + num + '"></div><div class="col-15"><select name="equipment_condition_' + num + '"><option value="new">New</option><option value="like_new">Like New</option><option value="used">Used</option></select></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="equip_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'equipment_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#equipment_box").innerHTML += new_row;
+        }
+
+        function removeElement(parentDiv, childDiv) {
+            if (childDiv == parentDiv) {
+                alert("The parent div cannot be removed.")
+            }
+            else if (document.getElementById(childDiv)) {
+                var child = document.getElementById(childDiv);
+                var parent = document.getElementById(parentDiv);
+                parent.removeChild(child);
+            }
+            else {
+                alert("Child div has already been removed or does not exist.");
+                return false;
+            }
+        }
+    </script>
+
+
+{% endblock %}

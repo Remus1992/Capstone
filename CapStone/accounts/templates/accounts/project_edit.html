@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load accounts_tags %}
+
+{% block title %}
+    : Edit Project
+{% endblock %}
+
+{% block content %}
+    <head>
+        <style>
+            body {
+                background-color: darkslategray;
+                color: white;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container" style="padding-top: 60px;">
+        <h1 class="page-header">{{ project.title }}</h1>
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="text-center">
+                    {% project_poster_or_default_image project %}
+                    <h6>Upload a different photo...</h6>
+                    <input name="project_poster" id="project_poster" type="file" class="text-center center-block well well-sm"
+                           form="edit_project_form">
+                    <div class="text-left">
+                        <label class="text-left">Description:</label>
+                        <textarea id="description_project" name="description_project" cols="40" rows="15"
+                                  form="edit_project_form">{{ project.description }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- edit form column -->
+            <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+{#                                <div class="alert alert-info alert-dismissable">#}
+{#                                    <a class="panel-close close" data-dismiss="alert">×</a>#}
+{#                                    <i class="fa fa-coffee"></i>#}
+{#                                    This is an <strong>.alert</strong>. Use this to show important messages to the user.#}
+{#                                </div>#}
+                <h3>Personal info</h3>
+                <form id="edit_project_form" role="form" enctype="multipart/form-data"
+                      method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Budget:</label>
+                        <div class="col-lg-8">
+                            <input name="budget_project" id="budget_project" class="form-control" value="{{ project.budget }}"
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Budget Details:</label>
+                        <div class="col-lg-8">
+                            <input name="budget_details" id="budget_details" class="form-control"
+                                   value="{{ project.budget_details }}"
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">City:</label>
+                        <div class="col-lg-8">
+                            <input name="city_name" id="city_name" class="form-control" value="{{ project.city }}"
+                                   type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">State:</label>
+                        <div class="col-lg-8">
+                            <input name="state" id="state" class="form-control" value="{{ project.state }}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Zip Code:</label>
+                        <div class="col-lg-8">
+                            <input name="zip_code" id="zip_code" class="form-control" value="{{ project.zip }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Projected Start Date:</label>
+                        <div class="col-lg-4">
+                            <input name="start_date" id="start_date" class="form-control"
+                                   value="{{ project.start_date }}"
+                                   type="date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Projected End Date:</label>
+                        <div class="col-lg-4">
+                            <input name="end_date" id="end_date" class="form-control" value="{{ project.end_date }}"
+                                   type="date">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Cast Needed:</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" id="cast_role_0" name="role_name_0"
+                                   placeholder="Name of Character">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="cast_classification_0">
+                                <option value="lead">Lead</option>
+                                <option value="supporting">Supporting</option>
+                                <option value="extra">Extras</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success my-2 my-sm-0" type="button" id="cast_button">Add Another
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="cast_box">
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Crew Needed:</label>
+                        <div class="col-sm-3">
+
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="crew_role_0">
+                                <option value="producer">Producer</option>
+                                <option value="director">Director</option>
+                                <option value="screenwriter">Screenwriter</option>
+                                <option value="cinematographer">Cinematographer</option>
+                                <option value="editor">Editor</option>
+                                <option value="art_director">Art Director</option>
+                                <option value="production_designer">Production Designer</option>
+                                <option value="costume_designer">Costume Designer</option>
+                                <option value="composer">Music Composer</option>
+                                <option value="script_supervisor">Script Supervisor</option>
+                                <option value="music_supervisor">Music Supervisor</option>
+                                <option value="assistant_director">Assistant Director</option>
+                                <option value="assistant_producer">Assistant Producer</option>
+                                <option value="gaffer">Gaffer</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success my-2 my-sm-0" type="button" id="crew_button">Add Another
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="crew_box">
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label"></label>
+                        <div class="col-md-8">
+                            <input class="btn btn-primary" value="Save Changes" type="submit">
+                            <span></span>
+                            <input class="btn btn-default" value="Reset" type="reset">
+                            <span></span>
+                            <a href="{% url 'project_view' project.slug %}" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('#cast_button').addEventListener("click", newCast);
+        document.querySelector('#crew_button').addEventListener("click", newCrew);
+
+        function newCast() {
+            var num = document.getElementById("cast_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="form-group row" id="row_' + num + '"><label class="col-md-2 control-label"></label><div class="col-sm-3"><input class="form-control" type="text" id="cast_role_' + num + '" name="role_name_' + num + '" placeholder="Name of Character"></div><div class="col-sm-3"><select class="form-control" name="cast_classification_' + num + '"><option value="lead">Lead</option> <option value="supporting">Supporting</option> <option value="extra">Extras</option> </select> </div> <div class="col-sm-3"> <input type="button" button class="btn btn-danger" id="cast_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'cast_box\',\'row_' + num + '\');"></button> </div> </div>';
+            document.querySelector("#cast_box").innerHTML += new_row;
+        }
+
+        function newCrew() {
+            var num = document.getElementById("crew_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="form-group row" id="row_' + num + '"><label class="col-md-2 control-label"></label><div class="col-sm-3"></div><div class="col-sm-3"><select class="form-control" name="crew_role_' + num + '"><option value="producer">Producer</option><option value="director">Director</option> <option value="screenwriter">Screenwriter</option><option value="cinematographer">Cinematographer</option> <option value="editor">Editor</option><option value="art_director">Art Director</option><option value="production_designer">Production Designer</option><option value="costume_designer">Costume Designer</option><option value="composer">Music Composer</option><option value="script_supervisor">Script Supervisor</option><option value="music_supervisor">Music Supervisor</option><option value="assistant_director">Assistant Director</option><option value="assistant_producer">Assistant Producer</option><option value="gaffer">Gaffer</option> </select> </div> <div class="col-sm-3"><input type="button" button class="btn btn-danger" id="crew_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'crew_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#crew_box").innerHTML += new_row;
+        }
+
+        function removeElement(parentDiv, childDiv) {
+            if (childDiv == parentDiv) {
+                alert("The parent div cannot be removed.")
+            }
+            else if (document.getElementById(childDiv)) {
+                var child = document.getElementById(childDiv);
+                var parent = document.getElementById(parentDiv);
+                parent.removeChild(child);
+            }
+            else {
+                alert("Child div has already been removed or does not exist.");
+                return false;
+            }
+        }
+    </script>
+    </body>
+{% endblock %}

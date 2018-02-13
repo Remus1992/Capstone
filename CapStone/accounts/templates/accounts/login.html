@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    : Login
+{% endblock %}
+
+{% block content %}
+    <head>
+        {#    <h1>Login</h1>#}
+        <style>
+
+            /* form */
+            body {
+                background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/static/accounts/img/film_crew_services.jpg");
+                background-size: cover;
+            }
+
+            .form-body {
+                background: #fff;
+                padding: 20px;
+            }
+
+            .inner-form {
+                padding-top: 20px;
+            }
+
+            .final-login li {
+                width: 50%;
+            }
+
+            .nav-tabs {
+                border-bottom: none !important;
+            }
+
+            .nav-tabs > li {
+                color: #222 !important;
+            }
+
+            .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+                color: #fff;
+                background-color: #d14d42;
+                border: none !important;
+                border-bottom-color: transparent;
+                border-radius: none !important;
+                padding: 5px;
+                width: 100%;
+                display: block;
+                border-radius: 5px;
+            }
+
+            .nav-tabs > li > a {
+                margin-right: 2px;
+                line-height: 1.428571429;
+                border: none !important;
+                border-radius: none !important;
+                text-transform: uppercase;
+                font-size: 16px;
+            }
+
+            .social-login {
+                text-align: center;
+                font-size: 12px;
+            }
+
+            .social-login p {
+                margin: 15px 0;
+            }
+
+            .social-login ul {
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+            }
+
+            .social-login ul li {
+                width: 33%;
+                float: left;
+                clear: fix;
+            }
+
+            .social-login ul li a {
+                font-size: 13px;
+                color: #fff;
+                text-decoration: none;
+                padding: 10px 0;
+                display: block;
+            }
+
+            .social-login ul li:nth-child(1) a {
+                background: #3b5998;
+            }
+
+            .social-login ul li:nth-child(2) a {
+                background: #e74c3d;
+            }
+
+            .social-login ul li:nth-child(3) a {
+                background: #3698d9;
+            }
+
+            .sa-innate-form input[type=text], input[type=password], input[type=file], textarea, select, email {
+                font-size: 13px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                outline: none;
+                width: 100%;
+                margin: 8px 0;
+
+            }
+
+            .sa-innate-form input[type=submit] {
+                border: 1px solid #e64b3b;
+                background: #e64b3b;
+                color: #fff;
+                padding: 10px 25px;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            .sa-innate-form input[type=submit]:hover {
+                border: 1px solid #db3b2b;
+                background: #db3b2b;
+                color: #fff;
+            }
+
+            .sa-innate-form button {
+                border: 1px solid #e64b3b;
+                background: #e64b3b;
+                color: #fff;
+                padding: 10px 25px;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            .sa-innate-form button:hover {
+                border: 1px solid #db3b2b;
+                background: #db3b2b;
+                color: #fff;
+            }
+
+            .sa-innate-form p {
+                font-size: 13px;
+                padding-top: 10px;
+            }
+
+            .col-centered {
+                float: none;
+                width: 350px;
+                margin: 0 auto;
+
+            }
+
+            #projects_listing {
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+        </style>
+    </head>
+    <body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-centered">
+                <div id="projects_listing" class="form-body">
+                    <ul class="nav nav-tabs final-login">
+                        <li class="active"><a data-toggle="tab" href="#sectionA">Sign In</a></li>
+                        <li><a data-toggle="tab" href="#sectionB">Join us!</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="sectionA">
+                            <div class="inner-form">
+                                <form class="sa-innate-form" method="post">
+                                    {% csrf_token %}
+                                    <label><b>Username</b></label>
+                                    <input type="text" name="username">
+                                    <label><b>Password</b></label>
+                                    <input type="password" name="password">
+                                    <button type="submit">Sign In</button>
+                                    <a href="">Forgot Password?</a>
+                                </form>
+                            </div>
+                            <div class="social-login">
+                                <p><b>- - - - - - - - - - - - - Sign In With - - - - - - - - - - - - - </b></p>
+                                <ul>
+                                    <li><a href=""><i class="fa fa-facebook"></i> Facebook</a></li>
+                                    <li><a href=""><i class="fa fa-google-plus"></i> Google+</a></li>
+                                    <li><a href=""><i class="fa fa-twitter"></i> Twitter</a></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div id="sectionB" class="tab-pane fade">
+                            <div class="inner-form">
+                                <form class="sa-innate-form" method="post">
+                                    <label><b>Name</b></label>
+                                    <input type="text" name="username">
+                                    <label><b>Email Address</b></label>
+                                    <input type="text" name="username">
+                                    <label><b>Password</b></label>
+                                    <input type="password" name="password">
+                                    <button type="submit">Join now</button>
+                                    <p>By clicking Join now, you agree to Tit4Tat's User Agreement, Privacy Policy,
+                                        and Cookie Policy.</p>
+                                </form>
+                            </div>
+                            <div class="social-login">
+                                <p><b>- - - - - - - - - - - - - Register With - - - - - - - - - - - - - </b></p>
+                                <ul>
+                                    <li><a href=""><i class="fa fa-facebook"></i> Facebook</a></li>
+                                    <li><a href=""><i class="fa fa-google-plus"></i> Google+</a></li>
+                                    <li><a href=""><i class="fa fa-twitter"></i> Twitter</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+
+{% endblock %}

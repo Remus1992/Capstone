@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load accounts_tags %}
+
+{% block title %}
+: Project List
+{% endblock %}
+
+{% block content %}
+<!--<h1>Project Total List</h1>-->
+<style>
+    body {
+        background-color: darkslategray;
+        color: white;
+    }
+
+    .row {
+        border-bottom: white;
+      }
+
+</style>
+<body>
+<br>
+{% for project in total_list %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            {% project_poster_or_default_image project %}
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'project_view' project.slug %}"
+               class="col-md-8 control-label"><h2>{{ project.title }}</h2></a>
+        </div>
+        <br>
+    </div>
+</div>
+{% endfor %}
+
+</body>
+
+{% endblock %}

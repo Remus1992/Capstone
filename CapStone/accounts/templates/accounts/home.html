@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+: Home
+{% endblock %}
+
+{% block content %}
+
+    <style>
+    {#html{#}
+    {#    background-color: darkslategray;#}
+    {##}
+    {#}#}
+
+    body {
+        {#background-color: darkgray;#}
+        background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url("/static/accounts/img/stock_camera.PNG");
+        background-size: cover;
+        {#background-attachment: fixed;#}
+        color: white;
+
+    }
+
+    {##page{#}
+    {#    background-color: rgba(0,0,0, 0.5);#}
+    {##}
+    {#}#}
+
+    #projects_listing, #profiles_listing {
+        background-color: rgba(0,0,0, 0.5);
+    }
+
+    h4{
+        font-family: "Courier New", Courier, monospace;
+    }
+
+    </style>
+
+    <div id='page' class="container mt-5 mb-5 pb-5 wow fadeInUp">
+        <div class="row justify-content-md-center">
+            <div class="col col-md-10">
+                <h3 class="text-center mt-4 pt-4"> <strong>Work <i>with</i> people, not <i>for</i> people.</strong></h3>
+                <h5 class="text-center">Tit4Tat's mission is to build networks and partners for collaborations, not just employees.
+                Here, you can bring your own vision to life by helpings others create theirs.</h5>
+            </div>
+        </div>
+        <div class="row justify-content-md-center pt-4">
+            <div class="col-lg-5">
+                <div id="projects_listing" class="raised block p-5 mb-3">
+                    <div class="text-center">
+                        <img src="/static/accounts/img/frame.png" alt="" width="77" class="pb-2">
+                    </div>
+                    <h4 class="text-center mt-1 mb-5">Post Your Vision</h4>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Tell us about your vision!</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Upload a script or poster if you've got one</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Define your budget</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> What roles are you looking for? Cast? Crew?</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> When is it? And how long should it take?</p>
+                    <a href="{% url 'project_create' %}" class="btn btn-outline-danger btn-lg col-lg-12 mt-5">Post for Free</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div id="profiles_listing" class="raised block p-5 mb-3">
+                    <div class="text-center">
+                        <img src="/static/accounts/img/clapperboard.png" alt="" width="77" class="pb-2">
+                    </div>
+                    <h4 class="text-center mt-1 mb-5">Explore Projects</h4>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Explore projects based on your criteria</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Find a project you want to to learn more about</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Talk to the visionary</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Outline how you can help each other</p>
+                    <p class="mb-2"><i class="fa fa-check" aria-hidden="true"></i> Commit to  each other's project</p>
+                    <a href="{% url 'project_total_list' %}" class="btn btn-outline-primary btn-lg col-lg-12 mt-5">Search for Free</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

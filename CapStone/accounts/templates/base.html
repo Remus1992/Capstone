@@ -1,0 +1,256 @@
+    {% load static %}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {#    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'accounts/img/apple-icon-57x57.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'accounts/img/apple-icon-60x60.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'accounts/img/apple-icon-72x72.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'accounts/img/apple-icon-76x76.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'accounts/img/apple-icon-114x114.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'accounts/img/apple-icon-120x120.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'accounts/img/apple-icon-144x144.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'accounts/img/apple-icon-152x152.png' %}">#}
+    {#    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'accounts/img/apple-icon-180x180.png' %}">#}
+    {#    <link rel="shortcut icon" type="image/png" sizes="192x192" href="{% static 'accounts/img/android-icon-192x192.png' %}">#}
+    {#    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'accounts/img/favicon-32x32.png' %}">#}
+    {#    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'accounts/img/favicon-96x96.png' %}">#}
+    {#    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'accounts/img/favicon-16x16.png' %}">#}
+    {#    <link rel="manifest" href="{% static 'accounts/img/manifest.json' %}">#}
+    {#    <meta name="msapplication-TileColor" content="#ffffff">#}
+    {#    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">#}
+    {#    <meta name="theme-color" content="#ffffff">#}
+    <link rel="shortcut icon" href="{% static 'accounts/img/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'accounts/img/favicon.ico' %}" type="image/x-icon">
+    <title>Tit4Tat{% block title %}
+    {% endblock %}</title>
+
+    <style>
+
+        body {
+            padding: 25px;
+        }
+
+        #navbar_website {
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        #login-dp {
+            min-width: 250px;
+            padding: 14px 14px 0;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, .8);
+            right: -16px;
+        }
+
+        #login-dp .help-block {
+            font-size: 12px
+        }
+
+        #login-dp .bottom {
+            background-color: rgba(255, 255, 255, .8);
+            border-top: 1px solid #ddd;
+            clear: both;
+            padding: 14px;
+        }
+
+        #login-dp .social-buttons {
+            margin: 12px 0
+        }
+
+        #login-dp .social-buttons a {
+            width: 49%;
+        }
+
+        #login-dp .form-group {
+            margin-bottom: 10px;
+        }
+
+        .btn-fb {
+            color: #fff;
+            background-color: #3b5998;
+        }
+
+        .btn-fb:hover {
+            color: #fff;
+            background-color: #496ebc
+        }
+
+        .btn-tw {
+            color: #fff;
+            background-color: #55acee;
+        }
+
+        .btn-tw:hover {
+            color: #fff;
+            background-color: #59b5fa;
+        }
+
+        @media (max-width: 768px) {
+            #login-dp {
+                background-color: inherit;
+                color: #fff;
+            }
+
+            #login-dp .bottom {
+                background-color: inherit;
+                border-top: 0 none;
+            }
+        }
+
+        .dropdown-menu {
+            left: auto !important;
+        }
+
+        .space {
+            padding: 2px;
+        }
+
+        .nav > li {
+            vertical-align: middle;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-text {
+            margin: auto 10px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a id="navbar_website" class="navbar-brand" href="{% url 'home' %}">Tit4Tat</a>
+    {#    <a href="{% url 'home' %}" id="navbar_website" class="navbar-brand">#}
+    {#    <img src="/static/accounts/img/Logo.png" alt="logo" width="50"></a>#}
+
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/">Admin</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Projects</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="{% url 'project_create' %}">Create A Project</a>
+{#                    <a class="dropdown-item" href="{% url 'project_edit' %}">Edit A Project</a>#}
+{#                    <a class="dropdown-item" href="{% url 'project_user_created_list' %}">My Projects</a>#}
+{#                    <a class="dropdown-item" href="{% url 'project_user_committed_list' %}">Projects Committed To</a>#}
+                    <a class="dropdown-item" href="{% url 'project_total_list' %}">Explore Projects</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown02" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Profile</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                    <a class="dropdown-item" href="{% url 'register' %}">Create Profile</a>
+                    <a class="dropdown-item" href="{% url 'profile' %}">View Profile</a>
+                    <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Projects">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+        <ul class="nav navbar-nav">
+            {% if user.is_authenticated %}
+                <li>
+                <li><p class="navbar-text">Hello <b>{{ user }}</b></p></li>
+                <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+                </li>
+            {% else %}
+                <li><p class="navbar-text">Already have an account?</p></li>
+                <li id="space" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+                    <ul id="login-dp" class="dropdown-menu">
+                        <li>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    Login via
+                                    <div class="social-buttons">
+                                        <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                                        <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+                                    </div>
+                                    or
+                                    <form class="form" method="post" action="{% url "login" %}?next={{ request.path }}"
+                                          id="login-nav">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputUsername">Username</label>
+                                            <input type="text" class="form-control" name="username"
+                                                   id="exampleInputUsername"
+                                                   placeholder="Username" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                            <input type="password" class="form-control" name="password"
+                                                   id="exampleInputPassword2"
+                                                   placeholder="Password" required>
+                                            <div class="help-block text-right"><a href="">Forget the password ?</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> keep me logged-in
+                                            </label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="bottom text-center">
+                                    New here ? <a href="{% url 'register' %}"><b>Join Us</b></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+
+
+{% block content %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="{% static 'bootstrap.min.js' %}"></script>
+<script src="{% static 'ie10-viewport-bug-workaround.js' %}"></script>
+
+</body>
+</html>
+
