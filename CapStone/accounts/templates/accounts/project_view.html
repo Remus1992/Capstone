@@ -13,31 +13,55 @@
             body {
                 background-color: darkslategray;
                 color: white;
-            {#background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), '<img src="{}" alt="background">' . format(project . project_images . url));#}{#background-size: cover;#}
+            }
 
+            .container-fluid {
+                padding-top: 30px;
+            }
+
+            #first_column, #second_column, #third_column {
+                border-radius: 5px;
+                background-color: rgba(255, 255, 255, 0.8);
+                /*font-size: medium;*/
+                /*font-weight: bold;*/
+                padding: 15px;
+                color: black;
+                /*margin-left: 10px;*/
+                margin: auto;
+
+            }
+
+            #third_column {
+                min-height: 300px;
             }
 
 
         </style>
     </head>
     <body>
-    <div class="container" style="padding-top: 60px;">
-        <h1 class="page-header">{{ project.title }}</h1>
+    <div class="container-fluid" style="padding-top: 60px;">
+
+
         <div class="row">
+            <div class="col-md-1"></div>
             <!-- left column -->
-            <div class="col-md-4 col-sm-6 col-xs-12">
+            <div id="first_column" class="col-md-3 col-sm-6 col-xs-12">
                 <div class="text-center">
                     {% project_poster_or_default_image project %}
                 </div>
                 <br>
+                <h1 class="page-header">{{ project.title }}</h1>
                 <div class="text-left">
                     {{ project.description }}
                 </div>
             </div>
             <!-- edit form column -->
-            <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+            <div id="second_column" class="col-md-3 personal-info">
                 <h3>Project Details</h3>
                 <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-8 control-label"><b>Tagline:</b> {{ project.tag_line }}</label>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-8 control-label"><b>Budget:</b> {{ project.budget }}</label>
                     </div>
@@ -62,34 +86,186 @@
                         <label class="col-lg-8 control-label"><b>Projected End Date:</b> {{ project.end_date }}</label>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Needed Cast/ Roles:</b>
+                        <label class="col-lg-8 control-label"><b>Needed Cast/ Roles:</b></label>
+                        <ul>
                             {% for cast in project.cast_members.all %}
                                 <div>
-                                    {{ cast }}
-                                    {{ cast.character }} : {{ cast.classification }}
+                                    <button data-cast="{{ cast.id }}"
+                                            data-owner=" {{ cast.project.owner.username }}"
+                                            data-project="{{ cast.project.title }}"
+                                            id="castRequest" class="btn btn-primary">{{ cast.character }}
+                                        : {{ cast.classification }}</button>
+                                    {# {{ cast.character }} : {{ cast.classification }}#}
                                 </div>
+                                <br>
                             {% endfor %}
-                        </label>
+                        </ul>
+
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Needed Crew:</b>
+                        <label class="col-lg-8 control-label"><b>Needed Crew:</b></label>
+                        <ul>
                             {% for crew in project.crew_members.all %}
                                 <div>
-                                    {{ crew.classification }}
+                                    <button data-crew="{{ crew.id }}" data-owner=" {{ crew.project.owner.username }}"
+                                            data-project="{{ crew.project.title }}"
+                                            id="castRequest" class="btn btn-primary">{{ crew.classification }}</button>
+                                    {# {{ crew.classification }}#}
                                 </div>
+                                <br>
                             {% endfor %}
-                        </label>
+                        </ul>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-8">
-                            <a href="{% url 'project_edit' project.slug %}" class="btn btn-primary">Edit</a>
+                    {% if user.username == project.owner.username %}
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-8">
+                                <a href="{% url 'project_edit' project.slug %}" class="btn btn-primary">Edit</a>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </form>
             </div>
+            <div id="third_column" class="col-md-3 personal-info">
+                <h3>Creator</h3>
+                <div class="form-group">
+
+
+                    <div class="span3 well">
+                        <center>
+                            <a href="#aboutModal" data-toggle="modal"
+                               data-target="#myModal">{% project_creator_image_or_default project %}</a>
+                            <h3>{{ project.owner.first_name }} {{ project.owner.last_name }}</h3>
+                            <em>writer/ director</em>
+                        </center>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true"></button>
+                                    <h4 class="modal-title" id="myModalLabel">More
+                                        About {{ project.owner.first_name }}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <center>
+                                        {% project_creator_image_or_default project %}
+                                        <h3 class="media-heading">{{ project.owner.first_name }} {{ project.owner.last_name }}</h3>
+                                        <span><strong>Skills: </strong></span>
+                                        {% for skill in project.owner.skills.all %}
+                                            <span class="badge badge-primary">
+                                                {{ skill.name }} : {{ skill.level }}
+                                            </span>
+                                        {% endfor %}
+                                        <br>
+                                        <span><strong>Interests: </strong></span>
+                                        {% for interest in project.owner.interests.all %}
+                                            <span class="badge badge-success">
+                                                {{ interest.name }}
+                                            </span>
+                                        {% endfor %}
+                                        <br>
+                                        <span><strong>Equipment: </strong></span>
+                                        {% for equipment in project.owner.equipment.all %}
+                                            <span class="badge badge-info">
+                                                {{ equipment.name }} : {{ equipment.condition }}
+                                            </span>
+                                        {% endfor %}
+                                    </center>
+
+                                    <hr>
+                                    <center>
+                                        <p class="text-left"><strong>Bio: </strong><br>
+                                            {{ project.owner.profile_bio }}</p>
+                                        <br>
+                                    </center>
+                                </div>
+                                <div class="modal-footer">
+                                    <center>
+                                        <a href="{% url 'profile' project.owner.username %}"
+                                           class="btn btn-outline-primary">Go To Profile</a>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">I've
+                                            heard
+                                            enough about {{ project.owner.first_name }}</button>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-1"></div>
         </div>
     </div>
+
+
+    <!-- The Modal (contains the Sign Up form) -->
+    <div id="id01" class="modal">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">x</span>
+        <form method="post" class="modal-content" action="{% url 'send_message' %}">
+            {% csrf_token %}
+            <div class="container">
+                <h1>Sign Up</h1>
+                <hr>
+                <label for="recipient"><b>To:</b></label>
+                <input type="text" id="recipient" name="recipient" readonly="readonly">
+
+                <label for="sender"><b>Sender:</b></label>
+                <input type="text" id="sender" name="sender" readonly="readonly">
+
+                <label for="project_name"><b>Project Name:</b></label>
+                <input type="text" id="project_name" name="project_name" readonly="readonly">
+
+                <label for="cast_id"><b>Cast Id:</b></label>
+                <input type="hidden" id="cast_id" name="cast_id">
+
+                <label for="crew_id"><b>Crew Id:</b></label>
+                <input type="hidden" id="crew_id" name="crew_id">
+
+                <label for="message_body"><b>Message:</b></label>
+                <textarea name="message_body" id="message_body" cols="30" rows="10"></textarea>
+                <div class="clearfix">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                            class="cancelbtn">
+                        Cancel
+                    </button>
+                    <button type="submit" class="signup">Sign Up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $('.castRequest').click(function () {
+            $('#id01').css('display', 'block');
+            $('#recipient').val($(this).data('owner'));
+            $('#sender').val('{{ user.username }}');
+            $('#project_name').val($(this).data('project'));
+            $('#cast_id').val($(this).data('cast'));
+        });
+
+        $('.crewRequest').click(function () {
+            console.log($(this).data('crew'))
+        })
+    </script>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
     </body>
 
 

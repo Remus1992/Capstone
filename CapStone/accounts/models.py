@@ -58,6 +58,7 @@ def project_image_uh(instance, filename):
 
 class Project(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owned_projects")
+    tag_line = models.TextField(max_length=300, blank=True, null=True)
     title = models.CharField(max_length=100)
     project_cover_art = models.ImageField(upload_to=project_cover_art_uh, blank=True, null=True)
     description = models.TextField(max_length=300, blank=True, null=True)
@@ -87,6 +88,7 @@ class Project(models.Model):
 
 
 class Cast(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cast_assignments', blank=True, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="cast_members")
     character = models.CharField(max_length=100, blank=True, null=True)
     classification = models.CharField(max_length=50, blank=True, null=True)
@@ -98,6 +100,7 @@ class Cast(models.Model):
 
 
 class Crew(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='crew_assignments', blank=True, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="crew_members")
     classification = models.CharField(max_length=50, blank=True, null=True)
     # username for person committed
@@ -107,6 +110,19 @@ class Crew(models.Model):
         return self.classification or 'No name given'
 
 
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
+    project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='messages')
+    cast = models.ForeignKey('Cast', on_delete=models.CASCADE, related_name='potential_cast', blank=True, null=True)
+    crew = models.ForeignKey('Crew', on_delete=models.CASCADE, related_name='potential_crew', blank=True, null=True)
+    body = models.TextField()
+    read = models.BooleanField(default=False)
+
+    def return_cast_or_crew(self):
+        if not self.crew:
+            return self.cast
+        return self.crew
 
 
 

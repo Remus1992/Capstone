@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
-from accounts.models import User, Skill, Interest, Equipment, Cast, Crew, Project
+from accounts.models import User, Skill, Interest, Equipment, Cast, Crew, Project, Message
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.http import JsonResponse
 
 
 def home(request):
@@ -74,9 +75,10 @@ def register(request):
     return render(request, "accounts/profile_reg_form.html")
 
 
-@login_required(login_url='/accounts/login/')
-def profile_view(request):
-    return render(request, "accounts/profile.html", {})
+# @login_required(login_url='/accounts/login/')
+def profile_view(request, slug):
+    profile = User.objects.get(username=slug)
+    return render(request, "accounts/profile.html", {"profile": profile})
 
 
 @login_required(login_url='/accounts/login/')
@@ -156,6 +158,7 @@ def project_create(request):
         project = Project()
         project.owner = request.user
         project.title = request.POST.get('title_project')
+        project.tag_line = request.POST.get('tag_line')
         project.description = request.POST.get('description_project')
         project.budget = request.POST.get('budget_project')
         project.budget_details = request.POST.get('budget_details')
@@ -214,6 +217,7 @@ def project_edit(request, slug):
         print(request.POST)
         print(request.FILES)
 
+        project.tag_line = request.POST.get('tag_line')
         project.description = request.POST.get('description_project')
         project.budget = request.POST.get('budget_project')
         project.budget_details = request.POST.get('budget_details')
@@ -268,14 +272,45 @@ def project_view(request, slug):
     return render(request, "accounts/project_view.html", {"project": project})
 
 
-@login_required(login_url='/accounts/login/')
-def project_user_created_list(request):
-    return render(request, "accounts/project_user_created_list.html")
+def send_message(request):
+    if request.method == 'POST':
+        msg = Message()
+        msg.sender = request.user
+        msg.recipient = User.objects.get(username=request.POST.get('recipient'))
+        msg.project = Project.objects.get(title=request.POST.get('project_name'))
+        cast = request.POST.get('cast_id')
+        if cast:
+            msg.cast = Cast.objects.get(pk=cast)
+
+        crew = request.POST.get('crew_id')
+        if crew:
+            msg.crew = Cast.objects.get(pk=crew)
+
+        msg.body = request.POST.get('message_body')
+        msg.save()
+        return JsonResponse({'message': 'Success'})
+    return JsonResponse({'message': 'Request must be post.'})
 
 
-@login_required(login_url='/accounts/login/')
-def project_user_committed_list(request):
-    return render(request, "accounts/project_user_committed_list.html")
+def view_received_message(request):
+    return render(request, 'view_received_message.html')
+
+
+def view_single_message(request, slug):
+    message = Message.objects.get(pk=slug)
+    message.read = True
+    message.save()
+    return render(request, 'view_single_message.html', {'message': message})
+
+
+# @login_required(login_url='/accounts/login/')
+# def project_user_created_list(request):
+#     return render(request, "accounts/project_user_created_list.html")
+#
+#
+# @login_required(login_url='/accounts/login/')
+# def project_user_committed_list(request):
+#     return render(request, "accounts/project_user_committed_list.html")
 
 
 def about(request):
