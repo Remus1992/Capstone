@@ -3,346 +3,368 @@
 {% load static %}
 
 {% block title %}
-: Create Project
+    : Create Project
 {% endblock %}
 
 {% block content %}
 
 
-<style>
-    body {
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/static/accounts/img/lenses.jpg");
-        background-size: cover;
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/static/accounts/img/lenses.jpg");
+            background-size: cover;
 
-    }
-
-    h1 {
-        text-align: center;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    input[type=text], select, textarea {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        resize: vertical;
-    }
-
-    label {
-        padding: 12px 12px 12px 0;
-        display: inline-block;
-    }
-
-    input[type=submit] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        float: right;
-    }
-
-    input[type=submit]:hover {
-        background-color: #45a049;
-    }
-
-    .container {
-        border-radius: 5px;
-
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 60px;
-        font-size: medium;
-        font-weight: bold;
-    }
-
-    .col-25 {
-        float: left;
-        width: 25%;
-        margin-top: 6px;
-    }
-
-    .col-10 {
-        float: left;
-        width: 10%;
-        margin-top: 6px;
-    }
-
-    .col-20 {
-        float: left;
-        width: 17%;
-        margin-top: 6px;
-    }
-
-    .col-50 {
-        float: left;
-        width: 50%;
-        margin-top: 6px;
-    }
-
-    .col-75 {
-        float: left;
-        width: 75%;
-        margin-top: 6px;
-    }
-
-    #submit_button {
-        float: right;
-
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-    @media (max-width: 600px) {
-        .col-25, .col-75, input[type=submit] {
-            width: 100%;
-            margin-top: 0;
         }
-    }
-</style>
 
-<br>
-<br>
-<br>
-<div id="form_page" class="container">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h1>Create A Project</h1>
-        <div class="row">
-            <div class="col-25">
-                <label for="title">Title</label>
+        h1 {
+            text-align: center;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            border-radius: 5px;
+
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 60px;
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+
+        .col-10 {
+            float: left;
+            width: 10%;
+            margin-top: 6px;
+        }
+
+        .col-20 {
+            float: left;
+            width: 17%;
+            margin-top: 6px;
+        }
+
+        .col-50 {
+            float: left;
+            width: 50%;
+            margin-top: 6px;
+        }
+
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+
+        #submit_button {
+            float: right;
+
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            .col-25, .col-75, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <br>
+    <br>
+    <br>
+    <div id="form_page" class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Create A Project</h1>
+            <div class="row">
+                <div class="col-25">
+                    <label for="title">Title</label>
+                </div>
+                <div class="col-50">
+                    <input type="text" id="title" name="title_project" placeholder="The title of the project...">
+                </div>
+                <div class="col-25">
+                    <input type="file" id="project_poster" name="project_poster" class="form-control">
+                </div>
             </div>
-            <div class="col-50">
-                <input type="text" id="title" name="title_project" placeholder="The title of the project...">
+            <div class="row">
+                <div class="col-25">
+                    <label for="genre">Genre</label>
+                </div>
+                <div class="col-25">
+                </div>
+                <div class="col-25">
+                    <select name="genre">
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="crime_or_gangster">Crime & Gangster</option>
+                        <option value="drama">Drama</option>
+                        <option value="epic_or_historical">Epics/ Historical</option>
+                        <option value="horror">Horror</option>
+                        <option value="musical_or_dance">Musicals/ Dance</option>
+                        <option value="sci_fi">Science Fiction</option>
+                        <option value="war">War</option>
+                        <option value="westerns">Westerns</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-25">
-                <input type="file" id="project_poster" name="project_poster" class="form-control">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="tag_line">Tag Line</label>
-            </div>
-            <div class="col-75">
+            <div class="row">
+                <div class="col-25">
+                    <label for="tag_line">Tag Line</label>
+                </div>
+                <div class="col-75">
                     <textarea id="tag_line" name="tag_line"
                               placeholder="What's your tag line?"></textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-25">
-                <label for="description">Description</label>
-            </div>
-            <div class="col-75">
+            <div class="row">
+                <div class="col-25">
+                    <label for="description">Description</label>
+                </div>
+                <div class="col-75">
                     <textarea id="description" name="description_project"
                               placeholder="What's your project about?"></textarea>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="additional_notes">Script/ Additional Notes</label>
+            <div class="row">
+                <div class="col-25">
+                    <label for="additional_notes">Script/ Additional Notes</label>
+                </div>
+                <div class="col-50">
+                    <input type="file" id="additional_notes" name="additional_notes" class="form-control">
+                </div>
+                <div class="col-20">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="additional_notes_button">Add
+                        Another
+                    </button>
+                </div>
             </div>
-            <div class="col-50">
-                <input type="file" id="additional_notes" name="additional_notes" class="form-control">
+            <div id="additional_notes_box">
             </div>
-            <div class="col-20">
-                <button class="btn btn-success my-2 my-sm-0" type="button" id="additional_notes_button">Add
-                    Another
-                </button>
+            <div class="row">
+                <div class="col-25">
+                    <label for="project_images">Location Pics/ Concept Art/ Etc.</label>
+                </div>
+                <div class="col-50">
+                    <input type="file" id="project_images" name="project_images" class="form-control">
+                </div>
+                <div class="col-20">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="additional_image_button">Add
+                        Another
+                    </button>
+                </div>
             </div>
-        </div>
-        <div id="additional_notes_box">
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="project_images">Location Pics/ Concept Art/ Etc.</label>
+            <div id="additional_picture_box">
             </div>
-            <div class="col-50">
-                <input type="file" id="project_images" name="project_images" class="form-control">
+            <div class="row">
+                <div class="col-25">
+                    <label for="budget">Budget</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="budget" name="budget_project" placeholder="What's your budget?">
+                </div>
             </div>
-            <div class="col-20">
-                <button class="btn btn-success my-2 my-sm-0" type="button" id="additional_image_button">Add
-                    Another
-                </button>
-            </div>
-        </div>
-        <div id="additional_picture_box">
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="budget">Budget</label>
-            </div>
-            <div class="col-75">
-                <input type="text" id="budget" name="budget_project" placeholder="What's your budget?">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="budget_details">Budget Details</label>
-            </div>
-            <div class="col-75">
+            <div class="row">
+                <div class="col-25">
+                    <label for="budget_details">Budget Details</label>
+                </div>
+                <div class="col-75">
                     <textarea id="budget_details" name="budget_details"
                               placeholder="What does your budget entail? Costumes, Food, etc."></textarea>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="cast">Cast Needed</label>
+            <div class="row">
+                <div class="col-25">
+                    <label for="cast">Cast Needed</label>
+                </div>
+                <div class="col-25">
+                    <input type="text" id="cast_role_0" name="role_name_0" placeholder="Name of Character">
+                </div>
+                <div class="col-25">
+                    <select name="cast_classification_0">
+                        <option value="lead">Lead</option>
+                        <option value="supporting">Supporting</option>
+                        <option value="extra">Extras</option>
+                    </select>
+                </div>
+                <div class="col-20">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="cast_button">Add Another</button>
+                </div>
             </div>
-            <div class="col-25">
-                <input type="text" id="cast_role_0" name="role_name_0" placeholder="Name of Character">
+            <div id="cast_box">
             </div>
-            <div class="col-25">
-                <select name="cast_classification_0">
-                    <option value="lead">Lead</option>
-                    <option value="supporting">Supporting</option>
-                    <option value="extra">Extras</option>
-                </select>
+            <div class="row">
+                <div class="col-25">
+                    <label for="crew">Crew Needed</label>
+                </div>
+                <div class="col-25">
+                </div>
+                <div class="col-25">
+                    <select name="crew_role_0">
+                        <option value="producer">Producer</option>
+                        <option value="director">Director</option>
+                        <option value="screenwriter">Screenwriter</option>
+                        <option value="cinematographer">Cinematographer</option>
+                        <option value="editor">Editor</option>
+                        <option value="art_director">Art Director</option>
+                        <option value="production_designer">Production Designer</option>
+                        <option value="costume_designer">Costume Designer</option>
+                        <option value="composer">Music Composer</option>
+                        <option value="script_supervisor">Script Supervisor</option>
+                        <option value="music_supervisor">Music Supervisor</option>
+                        <option value="assistant_director">Assistant Director</option>
+                        <option value="assistant_producer">Assistant Producer</option>
+                        <option value="gaffer">Gaffer</option>
+                    </select>
+                </div>
+                <div class="col-20">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="crew_button">Add Another</button>
+                </div>
             </div>
-            <div class="col-20">
-                <button class="btn btn-success my-2 my-sm-0" type="button" id="cast_button">Add Another</button>
+            <div id="crew_box">
             </div>
-        </div>
-        <div id="cast_box">
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="crew">Crew Needed</label>
+            <div class="row">
+                <div class="col-25">
+                    <label for="city_name">City</label>
+                </div>
+                <div class="col-25">
+                    <input type="text" id="city_name" name="city_name" placeholder="e.g. Portland">
+                </div>
             </div>
-            <div class="col-25">
+            <div class="row">
+                <div class="col-25">
+                    <label for="state">State</label>
+                </div>
+                <div class="col-25">
+                    <input type="text" id="state" name="state" placeholder="e.g. Oregon">
+                </div>
             </div>
-            <div class="col-25">
-                <select name="crew_role_0">
-                    <option value="producer">Producer</option>
-                    <option value="director">Director</option>
-                    <option value="screenwriter">Screenwriter</option>
-                    <option value="cinematographer">Cinematographer</option>
-                    <option value="editor">Editor</option>
-                    <option value="art_director">Art Director</option>
-                    <option value="production_designer">Production Designer</option>
-                    <option value="costume_designer">Costume Designer</option>
-                    <option value="composer">Music Composer</option>
-                    <option value="script_supervisor">Script Supervisor</option>
-                    <option value="music_supervisor">Music Supervisor</option>
-                    <option value="assistant_director">Assistant Director</option>
-                    <option value="assistant_producer">Assistant Producer</option>
-                    <option value="gaffer">Gaffer</option>
-                </select>
+            <div class="row">
+                <div class="col-25">
+                    <label for="zip_code">Zip Code</label>
+                </div>
+                <div class="col-25">
+                    <input type="text" id="zip_code" name="zip_code" placeholder="e.g. 97223">
+                </div>
             </div>
-            <div class="col-20">
-                <button class="btn btn-success my-2 my-sm-0" type="button" id="crew_button">Add Another</button>
-            </div>
-        </div>
-        <div id="crew_box">
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="city_name">City</label>
-            </div>
-            <div class="col-25">
-                <input type="text" id="city_name" name="city_name" placeholder="e.g. Portland">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="state">State</label>
-            </div>
-            <div class="col-25">
-                <input type="text" id="state" name="state" placeholder="e.g. Oregon">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-25">
-                <label for="zip_code">Zip Code</label>
-            </div>
-            <div class="col-25">
-                <input type="text" id="zip_code" name="zip_code" placeholder="e.g. 97223">
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-25">
-                <label for="projected_dates">Projected Dates</label>
+            <div class="row">
+                <div class="col-25">
+                    <label for="projected_dates">Projected Dates</label>
+                </div>
+                <div class="col-20">
+                    <label for="start_date">Start Date</label>
+                </div>
+                <div class="col-20">
+                    <input type="date" id="start_date" name="start_date" class="form-control">
+                </div>
+                <div class="col-20">
+                    <label for="end_date">End Date</label>
+                </div>
+                <div class="col-20">
+                    <input type="date" id="end_date" name="end_date" class="form-control">
+                </div>
             </div>
-            <div class="col-20">
-                <label for="start_date">Start Date</label>
+
+
+            <div id='submit_button' class="row">
+                <input type="submit" value="Submit">
             </div>
-            <div class="col-20">
-                <input type="date" id="start_date" name="start_date" class="form-control">
-            </div>
-            <div class="col-20">
-                <label for="end_date">End Date</label>
-            </div>
-            <div class="col-20">
-                <input type="date" id="end_date" name="end_date" class="form-control">
-            </div>
-        </div>
+        </form>
+    </div>
+    <script>
+        document.querySelector('#additional_notes_button').addEventListener("click", newDocument);
+        document.querySelector('#additional_image_button').addEventListener("click", newImage);
+        document.querySelector('#cast_button').addEventListener("click", newCast);
+        document.querySelector('#crew_button').addEventListener("click", newCrew);
 
-
-        <div id='submit_button' class="row">
-            <input type="submit" value="Submit">
-        </div>
-    </form>
-</div>
-<script>
-    document.querySelector('#additional_notes_button').addEventListener("click", newDocument);
-    document.querySelector('#additional_image_button').addEventListener("click", newImage);
-    document.querySelector('#cast_button').addEventListener("click", newCast);
-    document.querySelector('#crew_button').addEventListener("click", newCrew);
-
-    function newDocument() {
-        var num = document.getElementById("additional_notes_box").children.length + 1;
-        console.log(num);
-        var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"></div><div class="col-50"><input type="file" id="additional_notes_' + num + ' name="additional_notes_' + num + '" ></div> <div class="col-15"> <input type="button" button class="btn btn-danger" id="notes_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'additional_notes_box\',\'row_' + num + '\');"></button></div></div>';
-        document.querySelector("#additional_notes_box").innerHTML += new_row;
-    }
-
-    function newImage() {
-        var num = document.getElementById("additional_picture_box").children.length + 1;
-        console.log(num);
-        var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"></div><div class="col-50"><input type="file" id="project_images_' + num + ' name="project_images' + num + '" ></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="pictures_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'additional_picture_box\',\'row_' + num + '\');"></button></div></div>';
-        document.querySelector("#additional_picture_box").innerHTML += new_row;
-    }
-
-    function newCast() {
-        var num = document.getElementById("cast_box").children.length + 1;
-        console.log(num);
-        var new_row = '<div class="row" id="row_' + num + '"><div class="col-25"></div><div class="col-25"><input type="text" id="cast_role_' + num + '" name="role_name_' + num + '" placeholder="Name of Character"></div><div class="col-25"><select name="cast_classification_' + num + '"><option value="lead">Lead</option><option value="supporting">Supporting</option><option value="extra">Extras</option></select></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="cast_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'cast_box\',\'row_' + num + '\');"></button></div></div>';
-        document.querySelector("#cast_box").innerHTML += new_row;
-    }
-
-    function newCrew() {
-        var num = document.getElementById("crew_box").children.length + 1;
-        console.log(num);
-        var new_row = '<div class="row" id="row_' + num + '"><div class="col-25"></div><div class="col-25"></div><div class="col-25"><select name="crew_role_' + num + '"><option value="producer">Producer</option><option value="director">Director</option><option value="screenwriter">Screenwriter</option> <option value="cinematographer">Cinematographer</option><option value="editor">Editor</option> <option value="art_director">Art Director</option><option value="production_designer">Production Designer</option><option value="costume_designer">Costume Designer</option><option value="composer">Music Composer</option><option value="script_supervisor">Script Supervisor</option><option value="music_supervisor">Music Supervisor</option><option value="assistant_director">Assistant Director</option><option value="assistant_producer">Assistant Producer</option><option value="gaffer">Gaffer</option> </select></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="crew_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'crew_box\',\'row_' + num + '\');"></button></div></div>';
-        document.querySelector("#crew_box").innerHTML += new_row;
-    }
-
-    function removeElement(parentDiv, childDiv) {
-        if (childDiv == parentDiv) {
-            alert("The parent div cannot be removed.")
+        function newDocument() {
+            var num = document.getElementById("additional_notes_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"></div><div class="col-50"><input type="file" id="additional_notes_' + num + ' name="additional_notes_' + num + '" ></div> <div class="col-15"> <input type="button" button class="btn btn-danger" id="notes_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'additional_notes_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#additional_notes_box").innerHTML += new_row;
         }
-        else if (document.getElementById(childDiv)) {
-            var child = document.getElementById(childDiv);
-            var parent = document.getElementById(parentDiv);
-            ;parent.removeChild(child);
-        }
-        else {
-            alert("Child div has already been removed or does not exist.");
-            return false;
-        }
-    }
 
-</script>
+        function newImage() {
+            var num = document.getElementById("additional_picture_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="row" id="row_' + num + '"> <div class="col-25"></div><div class="col-50"><input type="file" id="project_images_' + num + ' name="project_images' + num + '" ></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="pictures_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'additional_picture_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#additional_picture_box").innerHTML += new_row;
+        }
+
+        function newCast() {
+            var num = document.getElementById("cast_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="row" id="row_' + num + '"><div class="col-25"></div><div class="col-25"><input type="text" id="cast_role_' + num + '" name="role_name_' + num + '" placeholder="Name of Character"></div><div class="col-25"><select name="cast_classification_' + num + '"><option value="lead">Lead</option><option value="supporting">Supporting</option><option value="extra">Extras</option></select></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="cast_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'cast_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#cast_box").innerHTML += new_row;
+        }
+
+        function newCrew() {
+            var num = document.getElementById("crew_box").children.length + 1;
+            console.log(num);
+            var new_row = '<div class="row" id="row_' + num + '"><div class="col-25"></div><div class="col-25"></div><div class="col-25"><select name="crew_role_' + num + '"><option value="producer">Producer</option><option value="director">Director</option><option value="screenwriter">Screenwriter</option> <option value="cinematographer">Cinematographer</option><option value="editor">Editor</option> <option value="art_director">Art Director</option><option value="production_designer">Production Designer</option><option value="costume_designer">Costume Designer</option><option value="composer">Music Composer</option><option value="script_supervisor">Script Supervisor</option><option value="music_supervisor">Music Supervisor</option><option value="assistant_director">Assistant Director</option><option value="assistant_producer">Assistant Producer</option><option value="gaffer">Gaffer</option> </select></div><div class="col-15"> <input type="button" button class="btn btn-danger" id="crew_close_button_' + num + '" value="&#xd7;" onClick="removeElement(\'crew_box\',\'row_' + num + '\');"></button></div></div>';
+            document.querySelector("#crew_box").innerHTML += new_row;
+        }
+
+        function removeElement(parentDiv, childDiv) {
+            if (childDiv == parentDiv) {
+                alert("The parent div cannot be removed.")
+            }
+            else if (document.getElementById(childDiv)) {
+                var child = document.getElementById(childDiv);
+                var parent = document.getElementById(parentDiv);
+                ;parent.removeChild(child);
+            }
+            else {
+                alert("Child div has already been removed or does not exist.");
+                return false;
+            }
+        }
+
+    </script>
 {% endblock %}

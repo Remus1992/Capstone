@@ -12,6 +12,13 @@ def profile_or_default_image(user):
     return mark_safe('<img src="{}" width="300px" class="avatar img-circle img-thumbnail" alt="avatar">'.format(
         '/static/accounts/img/human_being.jpg'))
 
+@register.simple_tag
+def profile_or_default_image_small(user):
+    if user.image:
+        return mark_safe(
+            '<img src="{}" width="300px" class="img-circle" alt="avatar">'.format(user.image.url))
+    return mark_safe('<img src="{}" width="300px" class="img-circle" alt="avatar">'.format(
+        '/static/accounts/img/human_being.jpg'))
 
 @register.simple_tag
 def project_poster_or_default_image(project):

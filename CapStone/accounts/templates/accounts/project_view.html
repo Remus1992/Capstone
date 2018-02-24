@@ -12,7 +12,7 @@
         <style>
             body {
                 background-color: darkslategray;
-                color: white;
+            {#color: white;#}
             }
 
             .container-fluid {
@@ -27,14 +27,14 @@
                 padding: 15px;
                 color: black;
                 /*margin-left: 10px;*/
-                margin: auto;
+                /*margin: auto;*/
+                margin: 30px auto auto auto;
 
             }
 
             #third_column {
                 min-height: 300px;
             }
-
 
         </style>
     </head>
@@ -58,73 +58,76 @@
             <!-- edit form column -->
             <div id="second_column" class="col-md-3 personal-info">
                 <h3>Project Details</h3>
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-8 control-label"><b>Tagline:</b> {{ project.tag_line }}</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-8 control-label"><b>Budget:</b> {{ project.budget }}</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Budget Details:</b> {{ project.budget_details }}
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>City:</b> {{ project.city }}</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>State:</b> {{ project.state }}</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Zip Code:</b> {{ project.zip }}</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Projected Start Date:</b> {{ project.start_date }}
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Projected End Date:</b> {{ project.end_date }}</label>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Needed Cast/ Roles:</b></label>
-                        <ul>
-                            {% for cast in project.cast_members.all %}
-                                <div>
-                                    <button data-cast="{{ cast.id }}"
-                                            data-owner=" {{ cast.project.owner.username }}"
-                                            data-project="{{ cast.project.title }}"
-                                            id="castRequest" class="btn btn-primary">{{ cast.character }}
-                                        : {{ cast.classification }}</button>
-                                    {# {{ cast.character }} : {{ cast.classification }}#}
-                                </div>
-                                <br>
-                            {% endfor %}
-                        </ul>
-
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-8 control-label"><b>Needed Crew:</b></label>
-                        <ul>
-                            {% for crew in project.crew_members.all %}
-                                <div>
-                                    <button data-crew="{{ crew.id }}" data-owner=" {{ crew.project.owner.username }}"
-                                            data-project="{{ crew.project.title }}"
-                                            id="castRequest" class="btn btn-primary">{{ crew.classification }}</button>
-                                    {# {{ crew.classification }}#}
-                                </div>
-                                <br>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% if user.username == project.owner.username %}
-                        <div class="form-group">
-                            <label class="col-md-3 control-label"></label>
-                            <div class="col-md-8">
-                                <a href="{% url 'project_edit' project.slug %}" class="btn btn-primary">Edit</a>
+                <div class="form-group">
+                    <label class="col-md-8 control-label"><b>Tagline:</b> {{ project.tag_line }}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-8 control-label"><b>Budget:</b> {{ project.budget }}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>Budget Details:</b> {{ project.budget_details }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>City:</b> {{ project.city }}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>State:</b> {{ project.state }}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>Zip Code:</b> {{ project.zip }}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>Projected Start Date:</b> {{ project.start_date }}
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>Projected End Date:</b> {{ project.end_date }}</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>Needed Cast/ Roles:</b></label>
+                    <ul>
+                        {% for cast in project.cast_members.all %}
+                            <div>
+                                <button data-cast="{{ cast.id }}"
+                                        data-owner="{{ cast.project.owner.username }}"
+                                        data-project="{{ cast.project.title }}"
+                                        class="castRequest btn btn-primary">{{ cast.character }}
+                                    : {{ cast.classification }}</button>
+                                {# {{ cast.character }} : {{ cast.classification }}#}
                             </div>
+                            <br>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-8 control-label"><b>Needed Crew:</b></label>
+                    <ul>
+                        {% for crew in project.crew_members.all %}
+                            <div>
+                                <button data-crew="{{ crew.id }}" data-owner="{{ crew.project.owner.username }}"
+                                        data-project="{{ crew.project.title }}"
+                                        class="crewRequest btn btn-primary">{{ crew.classification }}</button>
+                                {# {{ crew.classification }}#}
+                            </div>
+                            <br>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                {% if user.username == project.owner.username %}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <a href="{% url 'project_edit' project.slug %}" class="btn btn-primary">Edit</a>
                         </div>
-                    {% endif %}
-                </form>
+                    </div>
+                    {#                    {% else %}#}
+                    {#                        <!-- Button to open the modal -->#}
+                    {#                        <button onclick="document.getElementById('id01').style.display='block'">Sign Up</button>#}
+                {% endif %}
+
             </div>
             <div id="third_column" class="col-md-3 personal-info">
                 <h3>Creator</h3>
@@ -145,10 +148,12 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true"></button>
                                     <h4 class="modal-title" id="myModalLabel">More
                                         About {{ project.owner.first_name }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;
+                                    </button>
+
                                 </div>
                                 <div class="modal-body">
                                     <center>
@@ -203,46 +208,58 @@
     </div>
 
 
-    <!-- The Modal (contains the Sign Up form) -->
-    <div id="id01" class="modal">
-        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">x</span>
-        <form method="post" class="modal-content" action="{% url 'send_message' %}">
-            {% csrf_token %}
-            <div class="container">
-                <h1>Sign Up</h1>
-                <hr>
-                <label for="recipient"><b>To:</b></label>
-                <input type="text" id="recipient" name="recipient" readonly="readonly">
-
-                <label for="sender"><b>Sender:</b></label>
-                <input type="text" id="sender" name="sender" readonly="readonly">
-
-                <label for="project_name"><b>Project Name:</b></label>
-                <input type="text" id="project_name" name="project_name" readonly="readonly">
-
-                <label for="cast_id"><b>Cast Id:</b></label>
-                <input type="hidden" id="cast_id" name="cast_id">
-
-                <label for="crew_id"><b>Crew Id:</b></label>
-                <input type="hidden" id="crew_id" name="crew_id">
-
-                <label for="message_body"><b>Message:</b></label>
-                <textarea name="message_body" id="message_body" cols="30" rows="10"></textarea>
-                <div class="clearfix">
-                    <button type="button" onclick="document.getElementById('id01').style.display='none'"
-                            class="cancelbtn">
-                        Cancel
+    <!-- Modal -->
+    <div class="modal fade" id="id01" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                    <button type="submit" class="signup">Sign Up</button>
+                </div>
+                <div class="modal-body">
+                    <form id="message" method="post" action="{% url 'project_view' project.slug %}">
+                        {% csrf_token %}
+
+                        <label for="recipient"><b>To:</b></label>
+                        <input type="text" id="recipient" name="recipient" readonly="readonly" class="form-control">
+
+                        <label for="sender"><b>Sender:</b></label>
+                        <input type="text" id="sender" name="sender" readonly="readonly" class="form-control">
+
+                        <label for="project_name"><b>Project Name:</b></label>
+                        <input type="text" id="project_name" name="project_name" readonly="readonly"
+                               class="form-control">
+
+                        {#                        <label for="cast_id"><b>Cast Id:</b></label>#}
+                        <input type="hidden" id="cast_id" name="cast_id">
+
+                        {#                        <label for="crew_id"><b>Crew Id:</b></label>#}
+                        <input type="hidden" id="crew_id" name="crew_id">
+
+                        <label for="message_body"><b>Message:</b></label>
+                        <textarea name="message_body" id="message_body" cols="30" rows="10"
+                                  class="form-control"></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button form="message" onclick="messageSent()" type="submit" class="Send Message btn btn-primary">
+                        Send Message
+                    </button>
+
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         $('.castRequest').click(function () {
-            $('#id01').css('display', 'block');
+            event.preventDefault();
+            $('#id01').modal('show');
             $('#recipient').val($(this).data('owner'));
             $('#sender').val('{{ user.username }}');
             $('#project_name').val($(this).data('project'));
@@ -250,7 +267,13 @@
         });
 
         $('.crewRequest').click(function () {
-            console.log($(this).data('crew'))
+            event.preventDefault();
+            {#console.log($(this).data('crew'))#}
+            $('#id01').modal('show');
+            $('#recipient').val($(this).data('owner'));
+            $('#sender').val('{{ user.username }}');
+            $('#project_name').val($(this).data('project'));
+            $('#crew_id').val($(this).data('crew'));
         })
     </script>
 
@@ -266,7 +289,50 @@
         }
     </script>
 
+    {#    <script>#}
+    {#    function messageSent() {#}
+    {#        alert("Message Sent!");#}
+    {#    }#}
+    {#</script>#}
     </body>
 
 
 {% endblock %}
+
+
+
+<!-- The Modal (contains the Sign Up form) -->
+{#    <div id="id01" class="modal">#}
+{#        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">x</span>#}
+{#        <form method="post" class="modal-content" action="{% url 'send_message' %}">#}
+{#            {% csrf_token %}#}
+{#            <div class="container">#}
+{#                <h1>Sign Up</h1>#}
+{#                <hr>#}
+{#                <label for="recipient"><b>To:</b></label>#}
+{#                <input type="text" id="recipient" name="recipient" readonly="readonly">#}
+{##}
+{#                <label for="sender"><b>Sender:</b></label>#}
+{#                <input type="text" id="sender" name="sender" readonly="readonly">#}
+{##}
+{#                <label for="project_name"><b>Project Name:</b></label>#}
+{#                <input type="text" id="project_name" name="project_name" readonly="readonly">#}
+{##}
+{#                <label for="cast_id"><b>Cast Id:</b></label>#}
+{#                <input type="hidden" id="cast_id" name="cast_id">#}
+{##}
+{#                <label for="crew_id"><b>Crew Id:</b></label>#}
+{#                <input type="hidden" id="crew_id" name="crew_id">#}
+{##}
+{#                <label for="message_body"><b>Message:</b></label>#}
+{#                <textarea name="message_body" id="message_body" cols="30" rows="10"></textarea>#}
+{#                <div class="clearfix">#}
+{#                    <button type="button" onclick="document.getElementById('id01').style.display='none'"#}
+{#                            class="cancelbtn">#}
+{#                        Cancel#}
+{#                    </button>#}
+{#                    <button type="submit" class="Send Message">Send Message</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}

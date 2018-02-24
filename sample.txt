@@ -1,0 +1,25 @@
+                    message_sender_list = []
+                    {% for message in user.received_messages.all %}
+                        message_sender = message.sender
+                        {% if message_sender not in message_sender_list %}
+                            message_sender_list.append('message_sender')
+
+                        {% else %}
+                            continue
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for message_sender in message_sender_list %}
+
+                        <li class="contact">
+                            <div class="wrap">
+                                <span class="contact-status"></span>
+                                {% profile_or_default_image_small message_sender %}
+                                <div class="meta">
+                                    <p class="name">{{ message_sender.username }}</p>
+                                    {#                                            <p class="preview">{{ message.project.title }} {{ message.body }}</p>#}
+                                </div>
+                            </div>
+                        </li>
+
+                    {% endfor %}

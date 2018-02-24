@@ -25,9 +25,11 @@ urlpatterns = [
     path('project/view/<slug:slug>/', views.project_view, name='project_view'),
 
     # Message URLS
-    path('send_message/', views.send_message, name='send_message'),
+    # path('send_message/', views.send_message, name='send_message'),
+    # path('send_message/<slug:slug>/', views.send_message, name='send_message'),
     path('view_received_message/', views.view_received_message, name='view_received_message'),
     path('view_single_message/<slug:slug>', views.view_single_message, name='view_single_message'),
+    path('view_add_chat_message/', views.view_add_chat_message, name='view_add_chat_message'),
 
 
 ]

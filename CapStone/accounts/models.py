@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 
 
 def user_image_uh(instance, filename):
@@ -11,6 +12,9 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=50)
     profile_bio = models.TextField(max_length=300, blank=True, null=True)
     image = models.ImageField(upload_to=user_image_uh, blank=True, null=True)
+
+    def new_message(self):
+        return self.received_messages.filter(read=False).exists()
 
 
 class Skill(models.Model):
@@ -61,6 +65,7 @@ class Project(models.Model):
     tag_line = models.TextField(max_length=300, blank=True, null=True)
     title = models.CharField(max_length=100)
     project_cover_art = models.ImageField(upload_to=project_cover_art_uh, blank=True, null=True)
+    genre = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(max_length=300, blank=True, null=True)
     project_documents = models.FileField(upload_to=project_document_uh, blank=True, null=True)
     project_images = models.ImageField(upload_to=project_image_uh, blank=True, null=True)
@@ -111,13 +116,18 @@ class Crew(models.Model):
 
 
 class Message(models.Model):
+    message = models.ForeignKey('Message', on_delete=models.CASCADE, related_name='children', blank=True, null=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     project = models.ForeignKey('Project', on_delete=models.CASCADE, related_name='messages')
     cast = models.ForeignKey('Cast', on_delete=models.CASCADE, related_name='potential_cast', blank=True, null=True)
     crew = models.ForeignKey('Crew', on_delete=models.CASCADE, related_name='potential_crew', blank=True, null=True)
+    time_stamp = models.DateTimeField(default=timezone.now)
     body = models.TextField()
     read = models.BooleanField(default=False)
+
+    def is_parent(self):
+        return not bool(self.message)
 
     def return_cast_or_crew(self):
         if not self.crew:
@@ -125,6 +135,9 @@ class Message(models.Model):
         return self.crew
 
 
+# class MessageThread(models.Model):
 
+    # time_stamp = models.DateTimeField
+    # pairs = models.CharField()
 
 

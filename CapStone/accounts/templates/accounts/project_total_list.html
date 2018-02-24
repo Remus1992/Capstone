@@ -4,83 +4,490 @@
 {% load accounts_tags %}
 
 {% block title %}
-: Project List
+    : Project List
 {% endblock %}
 
-{% block content %}
-<!--<h1>Project Total List</h1>-->
-<style>
-    body {
 
-        background-color: darkslategray;
-        /*color: white;*/
-    }
+{% block css %}
+    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"#}
+    {#          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">#}
+    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"#}
+    {#          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">#}
+    {#    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">#}
+    <style>
+        body {
 
-    .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-        max-width: 300px;
-        margin: auto;
-        /*margin-bottom: 15px;*/
-        text-align: center;
-        padding: 5px;
+            background-color: darkslategray;
+            /*color: white;*/
+        }
 
-    }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            max-width: 300px;
+            margin: 30px 30px auto 30px;
+            /*margin-bottom: 15px;*/
+            text-align: center;
+            padding: 5px;
 
-    .card:hover {
-        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.9);
-    }
+        }
 
-    .title {
-        color: grey;
-        font-size: 18px;
-    }
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.9);
+        }
 
-    .button {
-        border: none;
-        outline: 0;
-        display: inline-block;
-        padding: 8px;
-        color: white;
-        background-color: #000;
-        text-align: center;
-        cursor: pointer;
-        width: 100%;
-        font-size: 18px;
-    }
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
 
-    /*a {*/
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        /*a {*/
         /*text-decoration: none;*/
         /*font-size: 22px;*/
         /*color: black;*/
-    /*}*/
+        /*}*/
 
-    .button:hover, a:hover {
-        opacity: 0.7;
-    }
+        .button:hover, a:hover {
+            opacity: 0.7;
+        }
 
-    .container-fluid {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-end;
-    }
+        .container-fluid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
 
-</style>
-<body>
-<br>
-<div class="container-fluid">
-{% for project in total_list %}
-<div class="card">
-    {% project_poster_or_default_image project %}
-    <h1>{{ project.title }}</h1>
-    <p class="title"><i>{{ project.tag_line }}</i></p>
-    <p>{{ project.owner.first_name }} {{ project.owner.last_name }}</p>
-    <p>
-        <a href="{% url 'project_view' project.slug %}" class="button">See More</a>
-    </p>
-</div>
-{% endfor %}
-</div>
-</body>
+        .dropdown.dropdown-lg .dropdown-menu {
+            margin-top: -1px;
+            padding: 6px 20px;
+        }
+
+        .input-group-btn .btn-group {
+            display: flex !important;
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+            margin-left: -1px;
+        }
+
+        .btn-group .btn:last-child {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .btn-group .form-horizontal .btn[type="submit"] {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .form-horizontal .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .form-group .form-control:last-child {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        @media screen and (min-width: 768px) {
+            #adv-search {
+                width: 500px;
+                margin: 0 auto;
+            }
+
+            .dropdown.dropdown-lg {
+                position: static !important;
+            }
+
+            .dropdown.dropdown-lg .dropdown-menu {
+                min-width: 500px;
+            }
+
+        }
+
+        hr {
+            display: block;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            margin-left: 20px;
+            margin-right: 20px;
+            border-style: inset;
+            border-width: 2px;
+            padding-left: 1000px;
+         }
+
+        .wrapper {
+            display: flex;
+            align-items: stretch;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        #sidebar.active {
+            margin-left: -250px;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            min-height: 100vh;
+        }
+
+        a[data-toggle="collapse"] {
+            position: relative;
+        }
+
+        {#a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {#}
+        {#    content: '\e259';#}
+        {#    display: block;#}
+        {#    position: absolute;#}
+        {#    right: 20px;#}
+        {#    font-family: 'Glyphicons Halflings';#}
+        {#    font-size: 0.6em;#}
+        {# } #}
+
+        {#a[aria-expanded="true"]::before {#}
+        {#    content: '\e260';#}
+        {# } #}
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px;
+            }
+
+            #sidebar.active {
+                margin-left: 0;
+            }
+        }
+
+        {#@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";#}
+
+        {##body {#}
+        {#    font-family: 'Poppins', sans-serif;#}
+        {#    background: #fafafa;#}
+        {# } #}
+
+        p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
+        }
+
+        a, a:hover, a:focus {
+        {#color: inherit;#} text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        #sidebar {
+            /* don't forget to add all the previously mentioned styles here too */
+            background: #292b2c;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #292b2c;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            border-bottom: 1px solid #47748b;
+        }
+
+        #sidebar ul p {
+            color: #fff;
+            padding: 10px;
+        }
+
+        #sidebar ul li a {
+            padding: 10px;
+            font-size: 1.1em;
+            display: block;
+            color: #fff;
+            background: #7d97a3;
+        }
+
+        #sidebar ul li a:hover {
+            color: #7386D5;
+            background: #fff;
+        }
+
+        #sidebar ul li.active > a, a[aria-expanded="true"] {
+            color: #fff;
+            background: #7d97a3;
+        }
+
+        ul ul a {
+            font-size: 0.9em !important;
+            padding-left: 30px !important;
+            background: #9cb2bc;
+        }
+
+        #genreSubmenu, #distanceSubmenu, #budgetSubmenu, #castSubmenu, #crewSubmenu {
+            margin-left: 0px;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            color: inherit;
+        }
+
+        #filter {
+            padding: 5px;
+            margin-right: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+
+    </style>
+
+
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Filter Projects</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#genreSubmenu" data-toggle="collapse" aria-expanded="false">Genres</a>
+                    <ul class="collapse list-unstyled" id="genreSubmenu">
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="action">Action
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="adventure">Adventure
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="crime_or_gangster">Crime &
+                            Gangster
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="drama">Drama
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="epic_or_historical">Epics/
+                            Historical
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="horror">Horror
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="musical_or_dance">Musicals/
+                            Dance
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="sci_fi">Science
+                            Fiction
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="war">War
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="westerns">Westerns
+                        </label></li>
+                    </ul>
+
+                <li>
+                    <a href="#distanceSubmenu" data-toggle="collapse" aria-expanded="false">Distance</a>
+                    <ul class="collapse list-unstyled" id="distanceSubmenu">
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="radius_1"><10
+                            miles
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="radius_2">10-50
+                            miles
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="radius_3">50-100
+                            miles
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="radius_4">>100
+                            miles
+                        </label></li>
+                    </ul>
+                <li>
+                    <a href="#budgetSubmenu" data-toggle="collapse" aria-expanded="false">Budget</a>
+                    <ul class="collapse list-unstyled" id="budgetSubmenu">
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_1"><$5,000
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_2">$5,000-10,000
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_3">$10,000-20,000
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_4">$20,000-60,000
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_5">>$60,0000
+                        </label></li>
+                    </ul>
+                <li>
+                    <a href="#castSubmenu" data-toggle="collapse" aria-expanded="false">Cast</a>
+                    <ul class="collapse list-unstyled" id="castSubmenu">
+                        {#                        <label class="radio-inline"><input type="radio" name="optradio">Male Roles</label>#}
+                        {#                        <label class="radio-inline"><input type="radio" name="optradio">Female Roles</label>#}
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="lead">Lead
+                            Roles
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="supporting">Supporting
+                            Roles
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="extra">Extras
+                            Only
+                        </label></li>
+                    </ul>
+                <li>
+                    <a href="#crewSubmenu" data-toggle="collapse" aria-expanded="false">Crew</a>
+                    <ul class="collapse list-unstyled" id="crewSubmenu">
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="producer">Producer
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="director">Director
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="screenwriter">Screenwriter
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="cinematographer">Cinematographer
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="editor">Editor
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="art_director">Art
+                            Director
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="production_designer">Production
+                            Designer
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="costume_designer">Costume
+                            Designer
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="composer">Music Composer
+                            Supervisor
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="script_supervisor">Script
+                            Supervisor
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="music_supervisor">Music
+                            Supervisor
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="assistant_director">Assistant
+                            Director
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="assistant_producer">Assistant
+                            Producer
+                        </label></li>
+                        <li><label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="gaffer">Gaffer
+                        </label></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        {# page content  #}
+        <div id="content" class="container-fluid">
+            <div class="input-group" style="padding-left: 20px">
+                <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-outline-secondary">Search</button>
+                    {#                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"#}
+                    {#                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                    {#                        <span class="sr-only">Toggle Dropdown</span>#}
+                    {#                    </button>#}
+                    {#                    <div class="dropdown-menu">#}
+                    {#                        <a class="dropdown-item" href="#">Action</a>#}
+                    {#                        <a class="dropdown-item" href="#">Another action</a>#}
+                    {#                        <a class="dropdown-item" href="#">Something else here</a>#}
+                    {#                        <div role="separator" class="dropdown-divider"></div>#}
+                    {#                        <a class="dropdown-item" href="#">Separated link</a>#}
+                    {#                    </div>#}
+                </div>
+            </div>
+            <div class="container-fluid">
+                <hr>
+            </div>
+
+            <div class="input-group mb-3" style="justify-content: flex-end">
+                <label for="filter" id="filter">Sort by</label>
+                <select class="custom-select" id="genre">
+                    <option selected>Projects</option>
+                    <option value="project">Profiles</option>
+                </select>
+            </div>
+            <div class="container-fluid">
+                {% for project in total_list %}
+                    <div class="card">
+                        {% project_poster_or_default_image project %}
+                        <h1>{{ project.title }}</h1>
+                        <p class="title"><i>{{ project.tag_line }}</i></p>
+                        <p>{{ project.owner.first_name }} {{ project.owner.last_name }}</p>
+                        <p>
+                            <a href="{% url 'project_view' project.slug %}" class="button">See More</a>
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block js %}
+    {#        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>#}
+    {#        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>#}
+    {#    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"#}
+    {#            integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"#}
+    {#            crossorigin="anonymous"></script>#}
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"#}
+    {#            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"#}
+    {#            crossorigin="anonymous"></script>#}
+    {#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"#}
+    {#            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"#}
+    {#            crossorigin="anonymous"></script>#}
 
 {% endblock %}

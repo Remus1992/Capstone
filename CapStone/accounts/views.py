@@ -75,13 +75,13 @@ def register(request):
     return render(request, "accounts/profile_reg_form.html")
 
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/projects/login/')
 def profile_view(request, slug):
     profile = User.objects.get(username=slug)
     return render(request, "accounts/profile.html", {"profile": profile})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/projects/login/')
 def profile_edit(request):
     if request.method == "POST":
         print(request.POST)
@@ -145,11 +145,11 @@ def profile_edit(request):
                 equipment.image = equipment_image
             equipment.save()
 
-        return HttpResponseRedirect(reverse("profile"))
+        return HttpResponseRedirect(reverse("profile", args=[request.user.username]))
     return render(request, "accounts/profile_edit.html")
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/projects/login/')
 def project_create(request):
     if request.method == "POST":
         print(request.POST)
@@ -210,7 +210,7 @@ def project_create(request):
     return render(request, "accounts/project_create.html")
 
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/projects/login/')
 def project_edit(request, slug):
     project = get_object_or_404(Project, slug=slug)
     if request.method == "POST":
@@ -219,6 +219,7 @@ def project_edit(request, slug):
 
         project.tag_line = request.POST.get('tag_line')
         project.description = request.POST.get('description_project')
+        project.genre = request.POST.get('genre')
         project.budget = request.POST.get('budget_project')
         project.budget_details = request.POST.get('budget_details')
         project.city = request.POST.get('city_name')
@@ -269,10 +270,7 @@ def project_total_list(request):
 
 def project_view(request, slug):
     project = get_object_or_404(Project, slug=slug)
-    return render(request, "accounts/project_view.html", {"project": project})
-
-
-def send_message(request):
+    # print('string')
     if request.method == 'POST':
         msg = Message()
         msg.sender = request.user
@@ -284,31 +282,101 @@ def send_message(request):
 
         crew = request.POST.get('crew_id')
         if crew:
-            msg.crew = Cast.objects.get(pk=crew)
+            msg.crew = Crew.objects.get(pk=crew)
 
         msg.body = request.POST.get('message_body')
         msg.save()
-        return JsonResponse({'message': 'Success'})
-    return JsonResponse({'message': 'Request must be post.'})
+
+    return render(request, "accounts/project_view.html", {"project": project})
 
 
+# def send_message(request, slug):
+#     project = get_object_or_404(Project, slug=slug)
+#     if request.method == 'POST':
+#         msg = Message()
+#         msg.sender = request.user
+#         msg.recipient = User.objects.get(username=request.POST.get('recipient'))
+#         msg.project = Project.objects.get(title=request.POST.get('project_name'))
+#         cast = request.POST.get('cast_id')
+#         if cast:
+#             msg.cast = Cast.objects.get(pk=cast)
+#
+#         crew = request.POST.get('crew_id')
+#         if crew:
+#             msg.crew = Crew.objects.get(pk=crew)
+#
+#         msg.body = request.POST.get('message_body')
+#         msg.save()
+#         return HttpResponseRedirect(reverse("project_view", kwargs={"slug": project.slug}))
+#         # return JsonResponse({'message': 'Success'})
+#     return JsonResponse({'message': 'Request must be post.'})
+
+@login_required(login_url='/projects/login/')
 def view_received_message(request):
-    return render(request, 'view_received_message.html')
+    messages = request.user.received_messages.all().order_by('sender__username')
+    messages_sent = request.user.sent_messages.all().order_by('recipient__username')
+    # message_sender_list = []
+    # for message in User.objects.get(username=request.POST.get('recipient')):
+    #     print("printMe")
+    #     print(message)
+    #     message_sender = message.sender
+    #     if message_sender not in message_sender_list:
+    #         message_sender_list.append('message_sender')
+    #     else:
+    #         continue
+    return render(request, 'accounts/view_received_message.html',
+                  {'messages': messages, 'messages_sent': messages_sent})
 
 
+@login_required(login_url='/projects/login/')
 def view_single_message(request, slug):
     message = Message.objects.get(pk=slug)
+    children_messages = message.children.all()
     message.read = True
+    for child in children_messages:
+        child.read = True
+        child.save()
     message.save()
-    return render(request, 'view_single_message.html', {'message': message})
+    messages = request.user.received_messages.all().order_by('sender__username')
+    messages_sent = request.user.sent_messages.all().order_by('recipient__username')
+    # messages = Message.objects.filter(sender=message.sender)
+    # print(messages)
+
+    return render(request, 'accounts/view_single_message.html',
+                  {'message': message, 'messages': messages.exclude(pk=message.pk),
+                   'messages_sent': messages_sent.exclude(pk=message.pk)})
 
 
-# @login_required(login_url='/accounts/login/')
+def view_add_chat_message(request):
+    if request.method == "POST":
+        child_message = Message()
+        parent_message = Message.objects.get(pk=request.POST.get('parent_id'))
+        users_list = []
+        users_list.append(parent_message.sender)
+        users_list.append(parent_message.recipient)
+        users_list.remove(request.user)
+        child_message.message = parent_message
+        child_message.sender = request.user
+        child_message.recipient = users_list[0]
+        # child_message.recipient = parent_message.sender if parent_message.sender is not request.user else parent_message.recipient
+        child_message.project = parent_message.project
+        child_message.cast = parent_message.cast
+        child_message.crew = parent_message.crew
+        child_message.body = request.POST.get('child_message')
+        child_message.save()
+        # print(child_message.is_parent())
+        # print(parent_message.is_parent())
+
+        return JsonResponse({'message': 'success'})
+    return JsonResponse({'message': 'MUST BE A POST'})
+
+
+# @login_required(login_url='/projects/login/')
 # def project_user_created_list(request):
 #     return render(request, "accounts/project_user_created_list.html")
 #
 #
-# @login_required(login_url='/accounts/login/')
+# @login_required(login_url='/projects/login/')
 # def project_user_committed_list(request):
 #     return render(request, "accounts/project_user_committed_list.html")
 
