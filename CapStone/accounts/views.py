@@ -268,6 +268,11 @@ def project_total_list(request):
     return render(request, "accounts/project_total_list.html", {'total_list': total_project_list})
 
 
+def profile_total_list(request):
+    total_profile_list = User.objects.all()
+    return render(request, "accounts/profile_total_list.html", {'profile_list': total_profile_list})
+
+
 def project_view(request, slug):
     project = get_object_or_404(Project, slug=slug)
     # print('string')

@@ -12,6 +12,9 @@ urlpatterns = [
     path('login/', login, {'template_name': 'accounts/login.html'}, name="login"),
     path('logout/', logout, name="logout"),
 
+    # Total List of Profiles
+    path('profile/list/', views.profile_total_list, name='profile_total_list'),
+
     # Profile URLs
     path('profile/<slug:slug>/', views.profile_view, name='profile'),
     path('edit/profile/', views.profile_edit, name='edit_profile'),
@@ -23,6 +26,7 @@ urlpatterns = [
     # Total List of Projects
     path('project/list/', views.project_total_list, name='project_total_list'),
     path('project/view/<slug:slug>/', views.project_view, name='project_view'),
+
 
     # Message URLS
     # path('send_message/', views.send_message, name='send_message'),

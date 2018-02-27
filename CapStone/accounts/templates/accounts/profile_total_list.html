@@ -4,7 +4,7 @@
 {% load accounts_tags %}
 
 {% block title %}
-    : Project List
+    : Profile List
 {% endblock %}
 
 
@@ -251,7 +251,7 @@
             color: inherit;
         }
 
-        #dropdownMenu {
+       #dropdownMenu {
             padding-top: 10px;
         }
 
@@ -271,7 +271,7 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#genreSubmenu" data-toggle="collapse" aria-expanded="false">Genres</a>
+                    <a href="#genreSubmenu" data-toggle="collapse" aria-expanded="false">Interests</a>
                     <ul class="collapse list-unstyled" id="genreSubmenu">
                         <li><label class="form-check-label">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="action">Action
@@ -333,26 +333,17 @@
                         </label></li>
                     </ul>
                 <li>
-                    <a href="#budgetSubmenu" data-toggle="collapse" aria-expanded="false">Budget</a>
+                    <a href="#budgetSubmenu" data-toggle="collapse" aria-expanded="false">Available Equipment</a>
                     <ul class="collapse list-unstyled" id="budgetSubmenu">
                         <li><label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_1"><$5,000
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="equip_1">Audio
                         </label></li>
                         <li><label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_2">$5,000-10,000
-                        </label></li>
-                        <li><label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_3">$10,000-20,000
-                        </label></li>
-                        <li><label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_4">$20,000-60,000
-                        </label></li>
-                        <li><label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="budget_5">>$60,0000
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="equip_2">Video
                         </label></li>
                     </ul>
                 <li>
-                    <a href="#castSubmenu" data-toggle="collapse" aria-expanded="false">Cast</a>
+                    <a href="#castSubmenu" data-toggle="collapse" aria-expanded="false">Seeking Cast Positions</a>
                     <ul class="collapse list-unstyled" id="castSubmenu">
                         {#                        <label class="radio-inline"><input type="radio" name="optradio">Male Roles</label>#}
                         {#                        <label class="radio-inline"><input type="radio" name="optradio">Female Roles</label>#}
@@ -370,7 +361,7 @@
                         </label></li>
                     </ul>
                 <li>
-                    <a href="#crewSubmenu" data-toggle="collapse" aria-expanded="false">Crew</a>
+                    <a href="#crewSubmenu" data-toggle="collapse" aria-expanded="false">Seeking Crew Positions</a>
                     <ul class="collapse list-unstyled" id="crewSubmenu">
                         <li><label class="form-check-label">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="producer">Producer
@@ -458,13 +449,6 @@
                 <hr>
             </div>
 
-{#            <div class="input-group mb-3" style="justify-content: flex-end">#}
-{#                <label for="filter" id="filter">Sort by</label>#}
-{#                <select class="custom-select" id="genre">#}
-{#                    <option selected>Projects</option>#}
-{#                    <option value="project">Profiles</option>#}
-{#                </select>#}
-{#            </div>#}
             <div class="dropdown" id="dropdownMenu">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -475,16 +459,15 @@
                     <a class="dropdown-item" href="{% url 'profile_total_list' %}">Profiles</a>
                 </div>
             </div>
-
             <div class="container-fluid">
-                {% for project in total_list %}
+                {% for user_profile in profile_list %}
                     <div class="card">
-                        {% project_poster_or_default_image project %}
-                        <h1>{{ project.title }}</h1>
-                        <p class="title"><i>{{ project.tag_line }}</i></p>
-                        <p>{{ project.owner.first_name }} {{ project.owner.last_name }}</p>
+                        {% profile_or_default_image user_profile %}
+                        <h1>{{ user_profile.username }}</h1>
+                        {#                        <p class="title"><i>{{ project.tag_line }}</i></p>#}
+                        <p>{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
                         <p>
-                            <a href="{% url 'project_view' project.slug %}" class="button">See More</a>
+                            <a href="{% url 'profile' user_profile.username %}" class="button">See More</a>
                         </p>
                     </div>
                 {% endfor %}
