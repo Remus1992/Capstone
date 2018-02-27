@@ -3,6 +3,7 @@ from accounts.models import User, Skill, Interest, Equipment, Cast, Crew, Projec
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import JsonResponse
+from django.db.models import Q
 
 
 def home(request):
@@ -265,11 +266,31 @@ def project_edit(request, slug):
 
 def project_total_list(request):
     total_project_list = Project.objects.all()
+    query = request.GET.get('q')
+    if query:
+        total_project_list = total_project_list.filter(
+            Q(title__icontains=query) |
+            Q(owner__username__icontains=query) |
+            Q(genre__icontains=query) |
+            Q(description__icontains=query) |
+            Q(city__icontains=query) |
+            Q(state__icontains=query) |
+            Q(zip__icontains=query)
+        )
+
     return render(request, "accounts/project_total_list.html", {'total_list': total_project_list})
 
 
 def profile_total_list(request):
     total_profile_list = User.objects.all()
+    query = request.GET.get('q')
+    if query:
+        total_profile_list = total_profile_list.filter(
+            Q(skills__name__icontains=query) |
+            Q(username__contains=query) |
+            Q(first_name__contains=query) |
+            Q(last_name__contains=query)
+        ).distinct()
     return render(request, "accounts/profile_total_list.html", {'profile_list': total_profile_list})
 
 

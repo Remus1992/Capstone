@@ -147,8 +147,10 @@
                     {% if user.is_authenticated %}
                         <a class="dropdown-item" href="{% url 'profile' user.username %}">View Profile</a>
                         <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+                        <a class="dropdown-item" href="{% url 'profile_total_list' %}">Explore Profiles</a>
                     {% else %}
                         <a class="dropdown-item" href="{% url 'register' %}">Create Profile</a>
+                        <a class="dropdown-item" href="{% url 'profile_total_list' %}">Explore Profiles</a>
                     {% endif %}
                 </div>
             </li>
